@@ -1,12 +1,14 @@
+using JetBrains.Annotations;
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,11 +18,18 @@ public class PantallaPrincipal : MonoBehaviour
 {
     private class Conectado
     {
-        string nombre;
-        bool invitado;
+        public string nombre;
+        public bool invitado;
+
+        public Conectado(string nombre, bool invitado)
+        {
+            this.nombre = nombre;
+            this.invitado = invitado;
+        }
     }
 
     public string usuario = null;
+    public int idPartida = -1;
 
     private UiElements uiElements;
     [SerializeField] Login login;
@@ -31,7 +40,7 @@ public class PantallaPrincipal : MonoBehaviour
     private ConcurrentQueue<string> responseQueue = new ConcurrentQueue<string>();
     private Thread threadServidor;
 
-    private List<Conectado> listaConectados;
+    private List<Conectado> listaConectados = new List<Conectado>();
 
 
     int receiveBufferPosition = 0;
@@ -60,7 +69,7 @@ public class PantallaPrincipal : MonoBehaviour
 
     private void EjecutarRespuesta(string respuesta)
     {
-        Debug.Log("Procesando respuesta " +  respuesta);
+        Debug.Log("Mensaje recibido: " +  respuesta);
         string[] trozos = respuesta.Split(new[] { '/' }, 2);
         int codigo = Convert.ToInt32(trozos[0]);
         string mensaje = trozos[1];
@@ -80,6 +89,9 @@ public class PantallaPrincipal : MonoBehaviour
             case 7:
                 ActualizarListaConectados(mensaje);
                 break;
+            case 9:
+                MostrarInvitacion(mensaje);
+                break;
 
         }
     }
@@ -89,11 +101,23 @@ public class PantallaPrincipal : MonoBehaviour
         string[] trozos = mensaje.Split('/');
         int usuariosConectados = Convert.ToInt32(trozos[0]);
         uiElements.mainPanelNumeroConectados.text = "Conectados: " + usuariosConectados + "\n";
-        int i = 1;
 
-        while(i < trozos.Length)
+        //elimina los conectados que ya no lo están
+        foreach(Conectado c in listaConectados.ToList())
         {
-            i++;
+            if (!trozos.Contains(c.nombre))
+            {
+                listaConectados.Remove(c);
+            }
+        }
+
+        //añade los conectados que faltaban
+        for(int i = 1; i < trozos.Length; i++)
+        {
+            if (!listaConectados.Any(c => c.nombre == trozos[i]))
+            {
+                listaConectados.Add(new Conectado(trozos[i], false));
+            }
         }
 
         // elimina todos los descendientes
@@ -104,31 +128,72 @@ public class PantallaPrincipal : MonoBehaviour
                 Destroy(t.gameObject);
             }
         }
-        
+
+        int j = 0;
         //añade todos los conectados a la lista de descendientes
         foreach (Conectado c in listaConectados)
         {
-            GameObject text = new GameObject("username_" + trozos[i]);
+            GameObject text = new GameObject("username_" + c.nombre);
             TextMeshProUGUI textMeshPro = text.AddComponent<TextMeshProUGUI>();
             Button button = text.AddComponent<Button>();
 
-            textMeshPro.text = trozos[i];
+            textMeshPro.text = c.nombre;
             textMeshPro.fontStyle = FontStyles.Normal;
             textMeshPro.fontSize = 16;
             textMeshPro.color = new Color(0.8f, 0.8f, 0.8f);
             text.transform.SetParent(uiElements.mainPanelListaConectados.transform.Find("Viewport").Find("Content"), false);
-            text.GetComponent<RectTransform>().anchoredPosition = new Vector2(10, -15 - 20 * i);
+            text.GetComponent<RectTransform>().anchoredPosition = new Vector2(10, -35 - 20 * j);
             text.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);
             text.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
             text.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
             text.GetComponent<RectTransform>().sizeDelta = new Vector2(175, 20);
+            button.onClick.AddListener( delegate { Conectado_OnClick(textMeshPro); } );
+            j++;
         }
 
     }
 
-    public void ConectadoClick(TextMeshProUGUI text)
+    public void Conectado_OnClick(TextMeshProUGUI text)
     {
+        if (text.text == usuario) return;
 
+        Conectado conectado = listaConectados.Find(c => c.nombre == text.text);
+        conectado.invitado = !conectado.invitado;
+
+        text.color = conectado.invitado ? new Color(0f, 0.6f, 0f) : new Color(0.8f, 0.8f, 0.8f);
+    }
+
+    public void InvitarSeleccionados()
+    {
+        List<Conectado> invitados = listaConectados.FindAll(c => c.invitado == true);
+        if(invitados.Count == 0) return;
+
+        string message = "8/" + invitados.Count();
+        foreach(Conectado invitado in invitados)
+        {
+            message += "/" + invitado.nombre;
+        }
+
+        byte[] msg = Encoding.ASCII.GetBytes(message);
+        server.Send(msg);
+    }
+
+    private void MostrarInvitacion(string message)
+    {
+        string[] trozos = message.Split("/");
+        idPartida = Convert.ToInt32(trozos[0]);
+
+        uiElements.notificionInvitacionPanel.gameObject.SetActive(true);
+        uiElements.notificionInvitacionPanel.transform.Find("Invitacion").GetComponent<TextMeshProUGUI>().text =
+            trozos[1] + " le ha invitado a una partida! (ID partida: " + trozos[0] + ")";
+    }
+    
+    public void CerrarInvitacion(bool aceptada)
+    {
+        string mensaje = "10/" + idPartida.ToString() + (aceptada ? "/1" : "/0");  
+        byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+        server.Send(msg);
+        uiElements.notificionInvitacionPanel.gameObject.SetActive(false);
     }
 
     public void Start()
@@ -216,12 +281,13 @@ public class PantallaPrincipal : MonoBehaviour
         usuario = null;
         uiElements.mainPanelListaConectados.gameObject.SetActive(false);
         uiElements.mainPanelUserInfo.gameObject.SetActive(false);
+        uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
         uiElements.mainPanelLoginButton.interactable = false;
         uiElements.mainPanelRegisterButton.interactable = false;
         uiElements.mainPanelMessageBox.text = "Desconectado. Conéctate presionando \"Conectar\"";
         uiElements.mainPanelConnectButton.interactable = true;
         uiElements.mainPanelDisconnectButton.interactable = false;
-
+        
     }
 
     public void AbrirLogin()

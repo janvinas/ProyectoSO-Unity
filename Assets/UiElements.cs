@@ -16,6 +16,9 @@ public class UiElements : MonoBehaviour
     public Image mainPanelProfilePicture;
     public Image mainPanelListaConectados;
     public TextMeshProUGUI mainPanelNumeroConectados;
+    public Button mainPanelInvitarJugadores;
+
+    public Image notificionInvitacionPanel;
 
     public Image loginPanel;
     public Image registerPanel;
