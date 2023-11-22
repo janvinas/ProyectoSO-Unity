@@ -23,6 +23,8 @@ public class Login : MonoBehaviour
     {
         server = mainCanvas.GetComponent<PantallaPrincipal>().server;
         uiElements = mainCanvas.GetComponent<UiElements>();
+        usuario.text = "";
+        password.text = "";
     }
 
     // Update is called once per frame
@@ -46,8 +48,6 @@ public class Login : MonoBehaviour
         // Enviamos al servidor el nombre tecleado
         byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
-        loginButton.interactable = false;
-        registerButton.interactable = false;
 
     }
 
@@ -65,6 +65,8 @@ public class Login : MonoBehaviour
                 uiElements.mainPanelUsername.text = usuario.text;
                 uiElements.mainPanelListaConectados.gameObject.SetActive(true);
                 uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
+                loginButton.interactable = false;
+                registerButton.interactable = false;
 
                 ClosePanel();
             }

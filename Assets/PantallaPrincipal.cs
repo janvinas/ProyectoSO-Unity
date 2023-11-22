@@ -49,8 +49,10 @@ public class PantallaPrincipal : MonoBehaviour
     {
         while(true)
         {
-            if (server == null || !server.Connected) return;
-
+            if (server == null || !server.Connected)
+            {
+                return;
+            }
             server.Receive(receiveBuffer, receiveBufferPosition, 1, SocketFlags.None);
 
             if (receiveBuffer[receiveBufferPosition] == '\n')
@@ -89,10 +91,20 @@ public class PantallaPrincipal : MonoBehaviour
             case 7:
                 ActualizarListaConectados(mensaje);
                 break;
+            case 8:
+                idPartida = Convert.ToInt32(mensaje);
+                uiElements.mainPanelInvitarJugadores.interactable = false;
+                break;
             case 9:
                 MostrarInvitacion(mensaje);
                 break;
-
+            case 11:
+                InvitacionAceptadaOtro(mensaje);
+                break;
+            case 13:
+                Chat c = uiElements.mainPanelChat.GetComponent<Chat>();
+                c.printMessage(mensaje.Split("/")[0] + ": " + mensaje.Split("/")[1], new Color(1, 1, 1));
+                break;
         }
     }
 
@@ -142,6 +154,7 @@ public class PantallaPrincipal : MonoBehaviour
             textMeshPro.fontSize = 16;
             textMeshPro.color = new Color(0.8f, 0.8f, 0.8f);
             text.transform.SetParent(uiElements.mainPanelListaConectados.transform.Find("Viewport").Find("Content"), false);
+            uiElements.mainPanelListaConectados.transform.Find("Viewport").Find("Content").gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 55 + 20*j);
             text.GetComponent<RectTransform>().anchoredPosition = new Vector2(10, -35 - 20 * j);
             text.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);
             text.GetComponent<RectTransform>().anchorMin = new Vector2(0, 1);
@@ -176,6 +189,11 @@ public class PantallaPrincipal : MonoBehaviour
 
         byte[] msg = Encoding.ASCII.GetBytes(message);
         server.Send(msg);
+
+        uiElements.mainPanelChatTitle.SetActive(true);
+        uiElements.mainPanelChatInput.SetActive(true);
+        uiElements.mainPanelChat.SetActive(true);
+
     }
 
     private void MostrarInvitacion(string message)
@@ -194,6 +212,16 @@ public class PantallaPrincipal : MonoBehaviour
         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
         uiElements.notificionInvitacionPanel.gameObject.SetActive(false);
+        uiElements.mainPanelChatTitle.SetActive(true);
+        uiElements.mainPanelChatInput.SetActive(true);
+        uiElements.mainPanelChat.SetActive(true);
+        uiElements.mainPanelInvitarJugadores.interactable = !aceptada;
+    }
+
+    private void InvitacionAceptadaOtro(string message)
+    {
+        string[] trozos = message.Split('/');
+        uiElements.mainPanelChat.GetComponent<Chat>().printMessage(trozos[1] + " ha entrado a la partida!", new Color(0.7f, 0.7f, 0.7f));
     }
 
     public void Start()
@@ -209,6 +237,7 @@ public class PantallaPrincipal : MonoBehaviour
             responseQueue.TryDequeue(out respuesta);
             EjecutarRespuesta(respuesta);
         }
+
     }
 
     private void OnApplicationQuit()
@@ -227,10 +256,36 @@ public class PantallaPrincipal : MonoBehaviour
     public void ConectarServidor(){
         uiElements.mainPanelMessageBox.text = "Conectando con el servidor...";
 
-        //Creamos un IPEndPoint con el ip del servidor y puerto del servidor 
-        //al que deseamos conectarnos
-        IPAddress direc = IPAddress.Parse("127.0.0.1");
-        IPEndPoint ipep = new IPEndPoint(direc, 9050);
+        int port = 50065;
+        IPEndPoint ipep;
+
+        string[] trozos = uiElements.mainPanelServerAddress.GetComponent<TMP_InputField>().text.Split(":");
+        if(trozos.Length == 0) {
+            uiElements.mainPanelMessageBox.text = "Proporciona una dirección de servidor!";
+            return;
+        }else if(trozos.Length == 2)
+        {
+            try
+            {
+                port = Convert.ToInt32(trozos[1]);
+            }
+            catch(Exception)
+            {
+                uiElements.mainPanelMessageBox.text = "Formato de puerto incorrecto.";
+                return;
+            }
+        }
+
+        try
+        {
+            IPAddress direc = Dns.GetHostAddresses(trozos[0])[0];
+            ipep = new IPEndPoint(direc, port);
+        }
+        catch (Exception) {
+            uiElements.mainPanelMessageBox.text = "Error resolviendo la dirección";
+            return;
+        }
+        
 
 
         //Creamos el socket 
@@ -262,22 +317,6 @@ public class PantallaPrincipal : MonoBehaviour
     public void DesconectarServidor()
     {
 
-        if (server == null || !server.Connected)
-        {
-            uiElements.mainPanelMessageBox.text = "No estabas conectado. Conéctate presionando \"Conectar\"";
-            return;
-        }
-
-        string mensaje = "0/";
-        byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-        server.Send(msg);
-        // Se terminó el servicio. 
-        // Nos desconectamos
-        uiElements.mainPanel.color = Color.gray;
-        threadServidor.Abort();
-        server.Shutdown(SocketShutdown.Both);
-        server.Close();
-
         usuario = null;
         uiElements.mainPanelListaConectados.gameObject.SetActive(false);
         uiElements.mainPanelUserInfo.gameObject.SetActive(false);
@@ -287,6 +326,23 @@ public class PantallaPrincipal : MonoBehaviour
         uiElements.mainPanelMessageBox.text = "Desconectado. Conéctate presionando \"Conectar\"";
         uiElements.mainPanelConnectButton.interactable = true;
         uiElements.mainPanelDisconnectButton.interactable = false;
+        listaConectados.Clear();
+
+        if (server == null || !server.Connected)
+        {
+            return;
+        }
+
+        string mensaje = "0/";
+        byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+        server.Send(msg);
+        // Se terminó el servicio. 
+        // Nos desconectamos
+        uiElements.mainPanel.color = Color.gray;
+        if(threadServidor.IsAlive) threadServidor.Abort();
+        server.Shutdown(SocketShutdown.Both);
+        server.Close();
+
         
     }
 
@@ -301,7 +357,5 @@ public class PantallaPrincipal : MonoBehaviour
         uiElements.registerPanel.gameObject.SetActive(true);
         uiElements.mainPanel.GetComponent<CanvasGroup>().interactable = false;
     }
-
-
 
 }

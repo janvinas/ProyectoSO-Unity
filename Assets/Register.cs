@@ -16,7 +16,11 @@ public class Register : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        usuario.text = "";
+        email.text = "";
+        genero.text = "";
+        password.text = "";
+        repetirPassword.text = "";
     }
 
     // Update is called once per frame
