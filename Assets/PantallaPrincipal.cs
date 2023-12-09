@@ -358,7 +358,7 @@ public class PantallaPrincipal : MonoBehaviour
 
     public void IniciarPartida()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Maps");
     }
 
 }
