@@ -10,6 +10,7 @@ using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -353,6 +354,11 @@ public class PantallaPrincipal : MonoBehaviour
     {
         uiElements.registerPanel.gameObject.SetActive(true);
         uiElements.mainPanel.GetComponent<CanvasGroup>().interactable = false;
+    }
+
+    public void IniciarPartida()
+    {
+        SceneManager.LoadScene("Main");
     }
 
 }
