@@ -42,9 +42,6 @@ public class PantallaPrincipal : MonoBehaviour
 
     private List<Conectado> listaConectados = new List<Conectado>();
 
-
-    int receiveBufferPosition = 0;
-    byte[] receiveBuffer = new byte[1024];
     private void AtenderServidor()
     {
         while(true)
@@ -53,18 +50,30 @@ public class PantallaPrincipal : MonoBehaviour
             {
                 return;
             }
-            server.Receive(receiveBuffer, receiveBufferPosition, 1, SocketFlags.None);
-
-            if (receiveBuffer[receiveBufferPosition] == '\n')
-            {
-                string respuesta = Encoding.ASCII.GetString(receiveBuffer, 0, receiveBufferPosition).Split('\0')[0];
-                responseQueue.Enqueue(respuesta);
-                receiveBufferPosition = 0;
-            }
             else
             {
-                receiveBufferPosition++;
-            } 
+                byte[] bytes = new byte[512];
+                try
+                {
+                    server.Receive(bytes);
+                    string respuesta = Encoding.ASCII.GetString(bytes).Split('\0')[0];
+                    string[] trozos = respuesta.Split('\n');
+                    foreach(string trozo in trozos)
+                    {
+                        if(trozo.Length != 0)
+                        {
+                            responseQueue.Enqueue(trozo);
+                        }
+                    }
+                }
+                catch(Exception e )
+                {
+                    Debug.Log(e.Message);
+                    return;
+                }
+                
+            }
+            
         }
         
     }
@@ -305,7 +314,6 @@ public class PantallaPrincipal : MonoBehaviour
         uiElements.mainPanelMessageBox.text = "Conectado con el servidor";
 
         uiElements.mainPanelConnectButton.interactable = false;
-        uiElements.mainPanelDisconnectButton.interactable = true;
         uiElements.mainPanelLoginButton.interactable = true;
         uiElements.mainPanelRegisterButton.interactable = true;
 
@@ -316,17 +324,6 @@ public class PantallaPrincipal : MonoBehaviour
 
     public void DesconectarServidor()
     {
-
-        usuario = null;
-        uiElements.mainPanelListaConectados.gameObject.SetActive(false);
-        uiElements.mainPanelUserInfo.gameObject.SetActive(false);
-        uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
-        uiElements.mainPanelLoginButton.interactable = false;
-        uiElements.mainPanelRegisterButton.interactable = false;
-        uiElements.mainPanelMessageBox.text = "Desconectado. Conéctate presionando \"Conectar\"";
-        uiElements.mainPanelConnectButton.interactable = true;
-        uiElements.mainPanelDisconnectButton.interactable = false;
-        listaConectados.Clear();
 
         if (server == null || !server.Connected)
         {

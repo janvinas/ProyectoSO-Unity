@@ -1,6 +1,7 @@
 using System.Net.Sockets;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Register : MonoBehaviour
 {
@@ -53,7 +54,13 @@ public class Register : MonoBehaviour
             TMP_Text text = usuario.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TMP_Text>();
             if (message == "1")
             {
+                //el usuario ya existe
                 text.color = new Color(0.8f, 0, 0);
+            }
+            else if(message == "0")
+            {
+                //el usuario no existe
+                text.color = new Color(0, 0.8f, 0);
             }
             else
             {
@@ -78,10 +85,14 @@ public class Register : MonoBehaviour
         {
             mensaje.text = "Valor incorrecto introducido en 'Género'";
             return;
+        }else if (email.text.IndexOf('@') <= 0)
+        {
+            mensaje.text = "Formato de correo erróneo";
+            return;
         }
 
         Socket server = mainCanvas.GetComponent<PantallaPrincipal>().server;
-        string message = "2/" + usuario.text + "/" + password.text;
+        string message = "2/" + usuario.text + "/" + password.text + "/" + email.text + "/" + genero.text;
         Debug.Log("enviando respuesta" + message);
         // Enviamos al servidor el nombre tecleado
         byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);

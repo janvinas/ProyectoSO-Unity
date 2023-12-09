@@ -80,32 +80,7 @@ public class Login : MonoBehaviour
             {
                 mensaje.text = "Error de base de datos";
             }
-        }else if(responseCode == 3)
-        {
-            TMP_Text text = usuario.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TMP_Text>();
-            Debug.Log(text.ToString());
-            if (message == "1")
-            {
-                text.color = new Color(0, 0.8f, 0);
-            }
-            else
-            {
-                text.color = new Color(0.1960f, 0.1960f, 0.1960f);
-            }
         }
-    }
-
-    public void OnUsernameChanged(TMP_InputField inputField)
-    {
-        if (server == null || !server.Connected || inputField.text == "")
-        {
-            return;
-        }
-
-        string mensaje = "3/" + inputField.text;
-        // Enviamos al servidor el nombre tecleado
-        byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
-        server.Send(msg);
     }
 
     public void ClosePanel()
