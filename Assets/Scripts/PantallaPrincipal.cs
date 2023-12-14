@@ -29,21 +29,20 @@ public class PantallaPrincipal : MonoBehaviour
         }
     }
 
-    public string usuario = null;
-    public int idPartida = -1;
+    public static string usuario = null;
+    public static int idPartida = -1;
 
     private UiElements uiElements;
     [SerializeField] Login login;
     [SerializeField] Register register;
 
-    public Socket server;
-
-    private ConcurrentQueue<string> responseQueue = new ConcurrentQueue<string>();
-    private Thread threadServidor;
+    public static Socket server;
+    public static ConcurrentQueue<string> responseQueue = new ConcurrentQueue<string>();
+    public static Thread threadServidor;
 
     private List<Conectado> listaConectados = new List<Conectado>();
 
-    private void AtenderServidor()
+    private static void AtenderServidor()
     {
         while(true)
         {
@@ -243,8 +242,7 @@ public class PantallaPrincipal : MonoBehaviour
     {
         while(responseQueue.Count > 0)
         {
-            string respuesta;
-            responseQueue.TryDequeue(out respuesta);
+            responseQueue.TryDequeue(out string respuesta);
             EjecutarRespuesta(respuesta);
         }
 

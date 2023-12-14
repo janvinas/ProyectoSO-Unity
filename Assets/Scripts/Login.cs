@@ -21,7 +21,7 @@ public class Login : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        server = mainCanvas.GetComponent<PantallaPrincipal>().server;
+        server = PantallaPrincipal.server;
         uiElements = mainCanvas.GetComponent<UiElements>();
         usuario.text = "";
         password.text = "";
@@ -59,7 +59,7 @@ public class Login : MonoBehaviour
         {
             if (message == "1")
             {
-                mainCanvas.GetComponent<PantallaPrincipal>().usuario = usuario.text;
+                PantallaPrincipal.usuario = usuario.text;
 
                 uiElements.mainPanelUserInfo.gameObject.SetActive(true);
                 uiElements.mainPanelUsername.text = usuario.text;

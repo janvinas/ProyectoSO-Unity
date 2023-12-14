@@ -1,0 +1,87 @@
+using System;
+using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Net.Sockets;
+using System.Text;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class InGameConnection : MonoBehaviour
+{
+    public GameObject otherPlayerPrefab;
+    public GameObject gameArea;
+
+    Socket server = PantallaPrincipal.server;
+    ConcurrentQueue<string> queue = PantallaPrincipal.responseQueue;
+    Dictionary<string, GameObject> jugadoresEnPartida = new Dictionary<string, GameObject>();
+    void Start()
+    {
+        InvokeRepeating("SendPlayerInformation", 0f, 0.05f);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        while(queue.Count > 0) {
+            queue.TryDequeue(out string respuesta);
+            EjecutarRespuesta(respuesta);
+        }
+    }
+
+    void SendPlayerInformation()
+    {
+        if (server == null || !server.Connected) return;
+
+        string x = this.gameObject.GetComponent<Transform>().position.x.ToString("0.0000", CultureInfo.InvariantCulture);
+        string y = this.gameObject.GetComponent<Transform>().position.y.ToString("0.0000", CultureInfo.InvariantCulture);
+        string name = PantallaPrincipal.usuario;
+        int idPartida = PantallaPrincipal.idPartida;
+
+        string mensaje = $"13/{idPartida}/{name}/{x}/{y}";
+        byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
+        server.Send(bytes);
+    }
+
+    void EjecutarRespuesta(string respuesta)
+    {
+        string[] trozos = respuesta.Split(new[] { '/' }, 2);
+        int codigo = Convert.ToInt32(trozos[0]);
+        string mensaje = trozos[1];
+
+        switch(codigo){
+            case 13:
+                ActualizarPosicionJugadores(mensaje);
+                break;
+        }
+    }
+
+    void ActualizarPosicionJugadores(string mensaje)
+    {
+        string[] trozos = mensaje.Split('/');
+        int i = 0;
+        while (i < trozos.Length)
+        {
+            string nombre = trozos[i];
+            float x = float.Parse(trozos[i + 1], CultureInfo.InvariantCulture.NumberFormat);
+            float y = float.Parse(trozos[i + 2], CultureInfo.InvariantCulture.NumberFormat);
+            if (jugadoresEnPartida.ContainsKey(nombre))
+            {
+                jugadoresEnPartida[nombre].GetComponent<Transform>().position = new Vector2(x, y);
+            }
+            else
+            {
+                GameObject jugador = Instantiate(otherPlayerPrefab, new Vector2(x, y), Quaternion.identity);
+                jugador.transform.SetParent(gameArea.transform, false);
+                jugador.transform.Find("Name/Name").GetComponent<Text>().text = nombre;
+                jugadoresEnPartida.Add(nombre, jugador);
+            }
+
+            i += 3;
+
+        }
+    }
+}

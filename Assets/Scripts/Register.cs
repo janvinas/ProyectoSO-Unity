@@ -91,7 +91,7 @@ public class Register : MonoBehaviour
             return;
         }
 
-        Socket server = mainCanvas.GetComponent<PantallaPrincipal>().server;
+        Socket server = PantallaPrincipal.server;
         string message = "2/" + usuario.text + "/" + password.text + "/" + email.text + "/" + genero.text;
         Debug.Log("enviando respuesta" + message);
         // Enviamos al servidor el nombre tecleado
@@ -108,7 +108,7 @@ public class Register : MonoBehaviour
 
     public void OnUsernameChanged(TMP_InputField inputField)
     {
-        Socket server = mainCanvas.GetComponent<PantallaPrincipal>().server;
+        Socket server = PantallaPrincipal.server;
         if (server == null || !server.Connected || inputField.text == "")
         {
             return;

@@ -19,7 +19,7 @@ public class Chat : MonoBehaviour
     private int messageNumber = 0;
     private int lowerBoundary = -5;
 
-
+    private Socket server = PantallaPrincipal.server;
 
     void Start()
     {
@@ -36,16 +36,16 @@ public class Chat : MonoBehaviour
     {
         if (!Input.GetKeyDown(KeyCode.Return)) return;
         PantallaPrincipal p = uiElements.GetComponent<PantallaPrincipal>();
-        if (p.server == null || !p.server.Connected || p.usuario == null || p.idPartida == -1) return;
+        if (server == null || !server.Connected || PantallaPrincipal.usuario == null || PantallaPrincipal.idPartida == -1) return;
         uiElements.mainPanelChatInput.GetComponent<TMP_InputField>().Select();
         uiElements.mainPanelChatInput.GetComponent<TMP_InputField>().ActivateInputField();
         string text = uiElements.mainPanelChatInput.GetComponent<TMP_InputField>().text.Replace("\n", "");
         if (text == "") return;
 
-        string message = "12/" + p.idPartida + "/" + p.usuario + "/" + text;
+        string message = "12/" + PantallaPrincipal.idPartida + "/" + PantallaPrincipal.usuario + "/" + text;
         Debug.Log("Mensaje enviado " + message);
         byte[] msg = Encoding.ASCII.GetBytes(message);
-        p.server.Send(msg);
+        server.Send(msg);
         uiElements.mainPanelChatInput.GetComponent<TMP_InputField>().text = "";
     }
 
