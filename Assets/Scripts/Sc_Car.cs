@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Sc_Car : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Sc_Car : MonoBehaviour
     [SerializeField] GameObject finCarrera;
     [SerializeField] Sc_MenuBehavior sc_MenuBehavior;
     public float Velocidad;
+    public float nitro;
     private float mHorizontal,mVertical;
     private Rigidbody2D rigid;
     private bool meta,mostrado;
@@ -16,9 +18,14 @@ public class Sc_Car : MonoBehaviour
     public int vueltasMax=3,vueltas;
     private float timerMax=0f;
     private Color colorPrincipal;
+    public float tiempoDuracionNitro = 0.5f;
+    public int contNitro = 0;
+    public TextMeshProUGUI texto;
     void Start()
     {
-        Velocidad = 2f;
+        texto.text = "0";
+        Velocidad = 1.0f;
+        nitro = 2f;
         rigid = gameObject.GetComponent<Rigidbody2D>();
         meta=false;
         mostrado=false;
@@ -51,6 +58,15 @@ public class Sc_Car : MonoBehaviour
             meta=true;
             finCarrera.SetActive(true);
         }
+        if (Input.GetKeyDown(KeyCode.N))// Verifica si la tecla "N" está siendo presionada, y llama a la funcion activarNitro
+        {
+            if (contNitro>0)
+            {
+                activaNitro();
+                contNitro = contNitro - 1;
+                texto.text = contNitro.ToString();
+            }
+        }
     }
     void FixedUpdate()
     {
@@ -70,6 +86,11 @@ public class Sc_Car : MonoBehaviour
         {
             meta=true;
             vueltas-=1;   
+        }
+        if (collision.transform.CompareTag("Nitro"))
+        {
+            contNitro += 1;
+            texto.text = contNitro.ToString();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -100,5 +121,15 @@ public class Sc_Car : MonoBehaviour
     void quitarUtlimaVuelta()
     {
         ultimaVelta.SetActive(false);
+    }
+    void VelocidadNormal()
+    {
+        //Vuelve a la velocidad sin nitro
+        Velocidad = Velocidad / nitro;
+    }
+    void activaNitro()
+    {
+        Velocidad = nitro * Velocidad;
+        Invoke("VelocidadNormal", tiempoDuracionNitro);  // Invoca la función "VelocidadNormal" después del tiempo especificado
     }
 }
