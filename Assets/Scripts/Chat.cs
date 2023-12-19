@@ -35,7 +35,6 @@ public class Chat : MonoBehaviour
     public void sendMessage()
     {
         if (!Input.GetKeyDown(KeyCode.Return)) return;
-        PantallaPrincipal p = uiElements.GetComponent<PantallaPrincipal>();
         if (server == null || !server.Connected || PantallaPrincipal.usuario == null || PantallaPrincipal.idPartida == -1) return;
         uiElements.mainPanelChatInput.GetComponent<TMP_InputField>().Select();
         uiElements.mainPanelChatInput.GetComponent<TMP_InputField>().ActivateInputField();
@@ -59,6 +58,7 @@ public class Chat : MonoBehaviour
         textMeshPro.fontStyle = FontStyles.Normal;
         textMeshPro.fontSize = 12;
         textMeshPro.color = color;
+        textMeshPro.font = uiElements.font;
         text.transform.SetParent(content, false);
         text.GetComponent<RectTransform>().anchoredPosition = new Vector2(5, lowerBoundary);
         text.GetComponent<RectTransform>().anchorMax = new Vector2(0, 1);

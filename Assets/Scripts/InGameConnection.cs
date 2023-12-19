@@ -41,7 +41,7 @@ public class InGameConnection : MonoBehaviour
         string name = PantallaPrincipal.usuario;
         int idPartida = PantallaPrincipal.idPartida;
 
-        string mensaje = $"13/{idPartida}/{name}/{x}/{y}";
+        string mensaje = $"14/{idPartida}/{name}/{x}/{y}";
         byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
         server.Send(bytes);
     }
@@ -53,7 +53,7 @@ public class InGameConnection : MonoBehaviour
         string mensaje = trozos[1];
 
         switch(codigo){
-            case 13:
+            case 14:
                 ActualizarPosicionJugadores(mensaje);
                 break;
         }

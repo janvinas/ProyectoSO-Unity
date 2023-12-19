@@ -36,9 +36,8 @@ public class Sc_Car : MonoBehaviour
     void Update()
     {
         mHorizontal = Input.GetAxis("Horizontal");
-        mVertical = Input.GetAxis("Vertical");        
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-        if(sc_MenuBehavior.acabado && vueltas!=0)
+        mVertical = Input.GetAxis("Vertical");
+        if (sc_MenuBehavior.acabado && vueltas!=0)
         {
             conteo();
         }

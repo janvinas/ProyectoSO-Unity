@@ -35,6 +35,7 @@ public class PantallaPrincipal : MonoBehaviour
     private UiElements uiElements;
     [SerializeField] Login login;
     [SerializeField] Register register;
+    [SerializeField] TMP_FontAsset font;
 
     public static Socket server;
     public static ConcurrentQueue<string> responseQueue = new ConcurrentQueue<string>();
@@ -112,7 +113,7 @@ public class PantallaPrincipal : MonoBehaviour
                 break;
             case 13:
                 Chat c = uiElements.mainPanelChat.GetComponent<Chat>();
-                c.printMessage(mensaje.Split("/")[0] + ": " + mensaje.Split("/")[1], new Color(1, 1, 1));
+                c.printMessage(mensaje.Split("/")[0] + ": " + mensaje.Split("/")[1], uiElements.accentColor);
                 break;
         }
     }
@@ -161,7 +162,8 @@ public class PantallaPrincipal : MonoBehaviour
             textMeshPro.text = c.nombre;
             textMeshPro.fontStyle = FontStyles.Normal;
             textMeshPro.fontSize = 16;
-            textMeshPro.color = new Color(0.8f, 0.8f, 0.8f);
+            textMeshPro.color = uiElements.accentColor;
+            textMeshPro.font = font;
             text.transform.SetParent(uiElements.mainPanelListaConectados.transform.Find("Viewport").Find("Content"), false);
             uiElements.mainPanelListaConectados.transform.Find("Viewport").Find("Content").gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 55 + 20*j);
             text.GetComponent<RectTransform>().anchoredPosition = new Vector2(10, -35 - 20 * j);
@@ -182,7 +184,7 @@ public class PantallaPrincipal : MonoBehaviour
         Conectado conectado = listaConectados.Find(c => c.nombre == text.text);
         conectado.invitado = !conectado.invitado;
 
-        text.color = conectado.invitado ? new Color(0f, 0.6f, 0f) : new Color(0.8f, 0.8f, 0.8f);
+        text.color = conectado.invitado ? uiElements.bgColor : uiElements.accentColor;
     }
 
     public void InvitarSeleccionados()
@@ -357,6 +359,11 @@ public class PantallaPrincipal : MonoBehaviour
     public void IniciarPartida()
     {
         SceneManager.LoadScene("Maps");
+    }
+
+    public void CerrarPantalla()
+    {
+
     }
 
 }

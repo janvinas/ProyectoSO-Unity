@@ -65,8 +65,8 @@ public class Login : MonoBehaviour
                 uiElements.mainPanelUsername.text = usuario.text;
                 uiElements.mainPanelListaConectados.gameObject.SetActive(true);
                 uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
-                loginButton.interactable = false;
-                registerButton.interactable = false;
+                uiElements.mainPanelLoginButton.interactable = false;
+                uiElements.mainPanelRegisterButton.interactable = false;
 
                 ClosePanel();
             }
