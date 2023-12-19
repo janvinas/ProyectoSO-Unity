@@ -189,7 +189,8 @@ public class PantallaPrincipal : MonoBehaviour
 
     public void InvitarSeleccionados()
     {
-        List<Conectado> invitados = listaConectados.FindAll(c => c.invitado == true);
+        //obté una llista dels connectats que han estat convidats
+        List<Conectado> invitados = listaConectados.FindAll(c => c.invitado);
         if(invitados.Count == 0) return;
 
         string message = "8/" + invitados.Count();
@@ -202,7 +203,6 @@ public class PantallaPrincipal : MonoBehaviour
         server.Send(msg);
 
         uiElements.mainPanelChatTitle.SetActive(true);
-        uiElements.mainPanelChatInput.SetActive(true);
         uiElements.mainPanelChat.SetActive(true);
 
     }
@@ -237,7 +237,28 @@ public class PantallaPrincipal : MonoBehaviour
 
     public void Start()
     {
-       uiElements = this.GetComponent<UiElements>();
+        uiElements = this.GetComponent<UiElements>();
+
+        //si el servidor ja està connectat:
+        if(server != null && server.Connected)
+        {
+            uiElements.mainPanelConnectButton.interactable = false;
+            if(usuario != null)
+            {
+                //sessió ja iniciada:
+                uiElements.mainPanelUserInfo.gameObject.SetActive(true);
+                uiElements.mainPanelListaConectados.gameObject.SetActive(true);
+                uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
+
+                //uiElements.mainPanelInvitarJugadores.interactable = false;
+                uiElements.mainPanelChat.SetActive(idPartida != -1);
+            }
+            else
+            {
+                uiElements.mainPanelLoginButton.interactable = false;
+                uiElements.mainPanelRegisterButton.interactable = false;
+            }
+        }
     }
 
     private void Update()
@@ -306,12 +327,12 @@ public class PantallaPrincipal : MonoBehaviour
         }
         catch
         {
-            uiElements.mainPanel.color = Color.red;
+            uiElements.mainPanelConnectionIndicator.color = Color.red;
             uiElements.mainPanelMessageBox.text = "No se ha podido conectar con el servidor";
             return;
         }
 
-        uiElements.mainPanel.color = Color.green;
+        uiElements.mainPanelConnectionIndicator.color = Color.green;
         uiElements.mainPanelMessageBox.text = "Conectado con el servidor";
 
         uiElements.mainPanelConnectButton.interactable = false;

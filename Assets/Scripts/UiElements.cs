@@ -7,6 +7,7 @@ public class UiElements : MonoBehaviour
     public Image mainPanel;
     public GameObject mainPanelServerAddress;
     public Button mainPanelConnectButton;
+    public Image mainPanelConnectionIndicator;
     public Button mainPanelLoginButton;
     public Button mainPanelRegisterButton;
     public TextMeshProUGUI mainPanelMessageBox;
