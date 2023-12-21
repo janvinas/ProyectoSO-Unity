@@ -6,6 +6,7 @@ public class Sc_Car : MonoBehaviour
 {
     [SerializeField] Text _temporizador;
     [SerializeField] Text _temporizadorMax;
+    [SerializeField] Text _nombreUsuario;
     [SerializeField] GameObject ultimaVelta;
     [SerializeField] GameObject finCarrera;
     [SerializeField] Sc_MenuBehavior sc_MenuBehavior;
@@ -21,6 +22,8 @@ public class Sc_Car : MonoBehaviour
     public float tiempoDuracionNitro = 0.5f;
     public int contNitro = 0;
     public TextMeshProUGUI texto;
+    private Text NombreUsuario;
+    
     void Start()
     {
         texto.text = "0";
@@ -32,6 +35,8 @@ public class Sc_Car : MonoBehaviour
         vueltas=vueltasMax;
         colorPrincipal = ScenesManager.colorPrincipal;
         gameObject.GetComponent<Renderer>().material.color = colorPrincipal;
+        NombreUsuario = transform.Find("Name").Find("Name").GetComponent<Text>();
+        NombreUsuario.text = PantallaPrincipal.usuario;
     }
     void Update()
     {
@@ -57,7 +62,7 @@ public class Sc_Car : MonoBehaviour
             meta=true;
             finCarrera.SetActive(true);
         }
-        if (Input.GetKeyDown(KeyCode.N))// Verifica si la tecla "N" está siendo presionada, y llama a la funcion activarNitro
+        if (Input.GetKeyDown(KeyCode.N))// Verifica si la tecla "N" estï¿½ siendo presionada, y llama a la funcion activarNitro
         {
             if (contNitro>0)
             {
@@ -129,6 +134,6 @@ public class Sc_Car : MonoBehaviour
     void activaNitro()
     {
         Velocidad = nitro * Velocidad;
-        Invoke("VelocidadNormal", tiempoDuracionNitro);  // Invoca la función "VelocidadNormal" después del tiempo especificado
+        Invoke("VelocidadNormal", tiempoDuracionNitro);  // Invoca la funciï¿½n "VelocidadNormal" despuï¿½s del tiempo especificado
     }
 }
