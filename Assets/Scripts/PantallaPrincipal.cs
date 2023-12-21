@@ -202,8 +202,8 @@ public class PantallaPrincipal : MonoBehaviour
         byte[] msg = Encoding.ASCII.GetBytes(message);
         server.Send(msg);
 
-        uiElements.mainPanelChatTitle.SetActive(true);
         uiElements.mainPanelChat.SetActive(true);
+        uiElements.mainPanelIniciarPartida.SetActive(true);
 
     }
 
@@ -223,7 +223,6 @@ public class PantallaPrincipal : MonoBehaviour
         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
         uiElements.notificionInvitacionPanel.gameObject.SetActive(false);
-        uiElements.mainPanelChatTitle.SetActive(true);
         uiElements.mainPanelChatInput.SetActive(true);
         uiElements.mainPanelChat.SetActive(true);
         uiElements.mainPanelInvitarJugadores.interactable = !aceptada;

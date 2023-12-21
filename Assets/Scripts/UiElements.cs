@@ -14,12 +14,11 @@ public class UiElements : MonoBehaviour
     public Image mainPanelUserInfo;
     public TextMeshProUGUI mainPanelUsername;
     public TextMeshProUGUI mainPanelExperience;
-    public Image mainPanelProfilePicture;
     public Image mainPanelListaConectados;
     public TextMeshProUGUI mainPanelNumeroConectados;
     public Button mainPanelInvitarJugadores;
+    public GameObject mainPanelIniciarPartida;
     public GameObject mainPanelChat;
-    public GameObject mainPanelChatTitle;
     public GameObject mainPanelChatInput;
 
     public Image notificionInvitacionPanel;
