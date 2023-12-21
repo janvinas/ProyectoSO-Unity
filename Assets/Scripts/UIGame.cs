@@ -1,4 +1,5 @@
 
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,10 +24,12 @@ public class UIGame : MonoBehaviour
     
     private void Return()
     {
+        SendStartingMessage("1");
         ScenesManager.Instance.LoadMap1();
     }
     private void Return2()
     {
+        SendStartingMessage("2");
         ScenesManager.Instance.LoadMap2();
     }
     private void Return3()
@@ -36,6 +39,16 @@ public class UIGame : MonoBehaviour
     private void Return4()
     {
         ScenesManager.Instance.LoadPerso();
+    }
+
+    private void SendStartingMessage(string mapa)
+    {
+        string message = "15/" + PantallaPrincipal.idPartida + "/" + mapa;
+        byte[] msg = Encoding.ASCII.GetBytes(message);
+
+        if (PantallaPrincipal.server == null || !PantallaPrincipal.server.Connected) return;
+
+        PantallaPrincipal.server.Send(msg);
     }
 
 }

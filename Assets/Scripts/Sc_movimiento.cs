@@ -11,12 +11,15 @@ public class Sc_movimiento : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private Transform nombre;
+
     void Start()
     {
        screenBounds=Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,Screen.height,Camera.main.transform.position.z));
        mida = GetComponent<Renderer>().bounds.size;
 
        rb = GetComponent<Rigidbody2D>();
+        nombre = transform.Find("Name");
 
     }
 
@@ -30,7 +33,7 @@ public class Sc_movimiento : MonoBehaviour
         {
             float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);
-            //nombre.transform.rotation = Quaternion.Euler(0, 0, 0);
+            nombre.rotation = Quaternion.Euler(0, 0, 0);
 
         }
     }

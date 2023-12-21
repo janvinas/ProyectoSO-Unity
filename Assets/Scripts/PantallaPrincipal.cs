@@ -115,6 +115,9 @@ public class PantallaPrincipal : MonoBehaviour
                 Chat c = uiElements.mainPanelChat.GetComponent<Chat>();
                 c.printMessage(mensaje.Split("/")[0] + ": " + mensaje.Split("/")[1], uiElements.accentColor);
                 break;
+            case 16:
+                IniciarPartida(mensaje);
+                break;
         }
     }
 
@@ -376,9 +379,22 @@ public class PantallaPrincipal : MonoBehaviour
         uiElements.mainPanel.GetComponent<CanvasGroup>().interactable = false;
     }
 
-    public void IniciarPartida()
+    public void SeleccionarMapa()
     {
         SceneManager.LoadScene("Maps");
+    }
+
+    public void IniciarPartida(string mensaje)
+    {
+        switch (mensaje)
+        {
+            case "1":
+                ScenesManager.Instance.LoadMap1();
+                break;
+            case "2":
+                ScenesManager.Instance.LoadMap2();
+                break;
+        }
     }
 
     public void CerrarPantalla()
