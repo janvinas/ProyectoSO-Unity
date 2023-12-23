@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Meta
   - Nitro
+  - Pista
   layers:
   - Default
   - TransparentFX

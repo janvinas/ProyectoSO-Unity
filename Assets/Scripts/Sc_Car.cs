@@ -6,7 +6,6 @@ public class Sc_Car : MonoBehaviour
 {
     [SerializeField] Text _temporizador;
     [SerializeField] Text _temporizadorMax;
-    [SerializeField] Text _nombreUsuario;
     [SerializeField] GameObject ultimaVelta;
     [SerializeField] GameObject finCarrera;
     [SerializeField] Sc_MenuBehavior sc_MenuBehavior;
@@ -27,7 +26,7 @@ public class Sc_Car : MonoBehaviour
     void Start()
     {
         texto.text = "0";
-        Velocidad = 1.0f;
+        Velocidad = 2f;
         nitro = 2f;
         rigid = gameObject.GetComponent<Rigidbody2D>();
         meta=false;
@@ -96,12 +95,20 @@ public class Sc_Car : MonoBehaviour
             contNitro += 1;
             texto.text = contNitro.ToString();
         }
+        if(collision.gameObject.CompareTag("Pista"))
+        {
+            rigid.drag = 5f;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Meta") )
         {
             meta=false;
+        }
+        if(collision.gameObject.CompareTag("Pista"))
+        {
+            rigid.drag = 30f;
         }
     }
     private void conteo()

@@ -14,6 +14,7 @@ public class ScenesManager : MonoBehaviour
         Main,
         Game1,
         Game2,
+        Game3,
         Maps,
         Personalizar,
         PantallaPrincipal
@@ -42,6 +43,10 @@ public class ScenesManager : MonoBehaviour
     public void LoadMap2()
     {
         SceneManager.LoadScene(Scene.Game2.ToString());
+    }
+    public void LoadMap3()
+    {
+        SceneManager.LoadScene(Scene.Game3.ToString());
     }
     public void LoadPerso()
     {
