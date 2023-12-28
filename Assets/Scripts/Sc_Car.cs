@@ -26,7 +26,7 @@ public class Sc_Car : MonoBehaviour
     void Start()
     {
         texto.text = "0";
-        Velocidad = 2f;
+        Velocidad = 0.7f;
         nitro = 2f;
         rigid = gameObject.GetComponent<Rigidbody2D>();
         meta=false;
