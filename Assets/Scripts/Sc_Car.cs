@@ -75,11 +75,11 @@ public class Sc_Car : MonoBehaviour
     {
         if(Mathf.Abs(mHorizontal) > 0.1f)
         {
-            rigid.AddForce(new Vector2(mHorizontal*Velocidad, 0f),ForceMode2D.Impulse);
+            rigid.AddForce(new Vector2(3*mHorizontal*Velocidad, 0f),ForceMode2D.Impulse);
         }
         if(Mathf.Abs(mVertical) > 0.1f)
         {
-            rigid.AddForce(new Vector2(0f, mVertical*Velocidad),ForceMode2D.Impulse);
+            rigid.AddForce(new Vector2(0f, 3*mVertical*Velocidad),ForceMode2D.Impulse);
         }
     }
 
@@ -97,7 +97,7 @@ public class Sc_Car : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Pista"))
         {
-            rigid.drag = 5f;
+            rigid.drag = 2f;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

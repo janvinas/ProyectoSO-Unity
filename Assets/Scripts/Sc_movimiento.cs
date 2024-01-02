@@ -26,8 +26,8 @@ public class Sc_movimiento : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x,-screenBounds.x + mida.x/2,screenBounds.x-mida.x/2),
-        Mathf.Clamp(transform.position.y,-screenBounds.y+mida.y/2,screenBounds.y-mida.y/2),transform.position.z);
+        //transform.position = new Vector3(Mathf.Clamp(transform.position.x,-screenBounds.x + mida.x/2,screenBounds.x-mida.x/2),
+        //Mathf.Clamp(transform.position.y,-screenBounds.y+mida.y/2,screenBounds.y-mida.y/2),transform.position.z);
 
         if(rb.velocity != Vector2.zero)
         {
