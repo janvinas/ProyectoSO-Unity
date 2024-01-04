@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Net.Sockets;
 using System.Text;
+using System.Globalization;
 
 public class Sc_Car : MonoBehaviour
 {
@@ -166,7 +167,7 @@ public class Sc_Car : MonoBehaviour
     {
         string name = PantallaPrincipal.usuario;
         int idPartida = PantallaPrincipal.idPartida;
-        string mensaje = $"17/{idPartida}/{name}/{currentTime}";
+        string mensaje = $"17/{idPartida}/{name}/{currentTime.ToString("0.0000", CultureInfo.InvariantCulture)}";
         byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
         server.Send(bytes);
     }

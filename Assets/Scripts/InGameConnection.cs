@@ -100,6 +100,6 @@ public class InGameConnection : MonoBehaviour
         string[] trozos = mensaje.Split('/');
         string nombre = trozos[0];
         float tiempo = float.Parse(trozos[1], CultureInfo.InvariantCulture.NumberFormat);
-        clasificacion.text += name + ": " + tiempo;
+        clasificacion.text += nombre + ": " + tiempo + "\n";
     }
 }

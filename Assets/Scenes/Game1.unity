@@ -5541,7 +5541,7 @@ MonoBehaviour:
   acabado: 0
   text: {fileID: 859850599}
   TimerUI: {fileID: 1020057557}
-  sc_Car: {fileID: 0}
+  sc_Car: {fileID: 6286878017373850933}
 --- !u!1 &645337553
 GameObject:
   m_ObjectHideFlags: 0
