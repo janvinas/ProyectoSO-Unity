@@ -36,12 +36,13 @@ public class InGameConnection : MonoBehaviour
     {
         if (server == null || !server.Connected) return;
 
-        string x = this.gameObject.GetComponent<Transform>().position.x.ToString("0.0000", CultureInfo.InvariantCulture);
-        string y = this.gameObject.GetComponent<Transform>().position.y.ToString("0.0000", CultureInfo.InvariantCulture);
+        string x = this.transform.position.x.ToString("0.0000", CultureInfo.InvariantCulture);
+        string y = this.transform.position.y.ToString("0.0000", CultureInfo.InvariantCulture);
+        string rot = this.transform.rotation.z.ToString("0.0000", CultureInfo.InvariantCulture);
         string name = PantallaPrincipal.usuario;
         int idPartida = PantallaPrincipal.idPartida;
 
-        string mensaje = $"14/{idPartida}/{name}/{x}/{y}";
+        string mensaje = $"14/{idPartida}/{name}/{x}/{y}/{rot}";
         byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
         server.Send(bytes);
     }
@@ -68,6 +69,7 @@ public class InGameConnection : MonoBehaviour
             string nombre = trozos[i];
             float x = float.Parse(trozos[i + 1], CultureInfo.InvariantCulture.NumberFormat);
             float y = float.Parse(trozos[i + 2], CultureInfo.InvariantCulture.NumberFormat);
+            float rot = float.Parse(trozos[i + 3], CultureInfo.InvariantCulture.NumberFormat);
             if (jugadoresEnPartida.ContainsKey(nombre))
             {
                 jugadoresEnPartida[nombre].GetComponent<Transform>().position = new Vector2(x, y);
@@ -77,10 +79,12 @@ public class InGameConnection : MonoBehaviour
                 GameObject jugador = Instantiate(otherPlayerPrefab, new Vector2(x, y), Quaternion.identity);
                 jugador.transform.SetParent(gameArea.transform, false);
                 jugador.transform.Find("Name/Name").GetComponent<Text>().text = nombre;
+                jugador.transform.rotation = Quaternion.Euler(0, 0, rot);
+                jugador.transform.Find("Name").rotation = Quaternion.Euler(0, 0, 0);
                 jugadoresEnPartida.Add(nombre, jugador);
             }
 
-            i += 3;
+            i += 4;
 
         }
     }
