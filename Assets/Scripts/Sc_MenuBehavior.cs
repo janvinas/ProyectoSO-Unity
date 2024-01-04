@@ -28,7 +28,7 @@ public class Sc_MenuBehavior : MonoBehaviour
         {
             conteoRegresivo();
         }
-        else if (Input.GetKeyDown("space"))
+        else if (Input.GetKeyDown("escape"))
         {    
             if(JuegoPausado)
                 Reanudar();

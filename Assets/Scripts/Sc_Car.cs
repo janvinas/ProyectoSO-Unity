@@ -70,7 +70,7 @@ public class Sc_Car : MonoBehaviour
                 enviarTiempos();
                 enviado=true;
         }
-        if (Input.GetKeyDown(KeyCode.N))// Verifica si la tecla "N" est� siendo presionada, y llama a la funcion activarNitro
+        if (Input.GetKeyDown(KeyCode.Space))// Verifica si la tecla "Space" est� siendo presionada, y llama a la funcion activarNitro
         {
             if (contNitro>0)
             {
