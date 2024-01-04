@@ -19,6 +19,7 @@ public class InGameConnection : MonoBehaviour
     Socket server = PantallaPrincipal.server;
     ConcurrentQueue<string> queue = PantallaPrincipal.responseQueue;
     Dictionary<string, GameObject> jugadoresEnPartida = new Dictionary<string, GameObject>();
+    int posicion=0;
 
     void Start()
     {
@@ -100,6 +101,8 @@ public class InGameConnection : MonoBehaviour
         string[] trozos = mensaje.Split('/');
         string nombre = trozos[0];
         float tiempo = float.Parse(trozos[1], CultureInfo.InvariantCulture.NumberFormat);
-        clasificacion.text += nombre + ": " + tiempo + "\n";
+        float mejorTiempo = float.Parse(trozos[2], CultureInfo.InvariantCulture.NumberFormat);
+        posicion ++;
+        clasificacion.text += posicion.ToString() + ".\t" + nombre + ":\t" + tiempo + "\t" + mejorTiempo + "\n";
     }
 }
