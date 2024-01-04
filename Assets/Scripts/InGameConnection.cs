@@ -77,6 +77,7 @@ public class InGameConnection : MonoBehaviour
             {
                 jugadoresEnPartida[nombre].transform.position = new Vector2(x, y);
                 jugadoresEnPartida[nombre].transform.rotation = Quaternion.Euler(0, 0, rot);
+                jugadoresEnPartida[nombre].transform.Find("Name").rotation = Quaternion.Euler(0, 0, 0);
             }
             else
             {
