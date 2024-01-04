@@ -38,7 +38,7 @@ public class InGameConnection : MonoBehaviour
 
         string x = this.transform.position.x.ToString("0.0000", CultureInfo.InvariantCulture);
         string y = this.transform.position.y.ToString("0.0000", CultureInfo.InvariantCulture);
-        string rot = this.transform.rotation.z.ToString("0.0000", CultureInfo.InvariantCulture);
+        string rot = this.transform.rotation.eulerAngles.z.ToString("0.0000", CultureInfo.InvariantCulture);
         string name = PantallaPrincipal.usuario;
         int idPartida = PantallaPrincipal.idPartida;
 
@@ -75,7 +75,8 @@ public class InGameConnection : MonoBehaviour
             float rot = float.Parse(trozos[i + 3], CultureInfo.InvariantCulture.NumberFormat);
             if (jugadoresEnPartida.ContainsKey(nombre))
             {
-                jugadoresEnPartida[nombre].GetComponent<Transform>().position = new Vector2(x, y);
+                jugadoresEnPartida[nombre].transform.position = new Vector2(x, y);
+                jugadoresEnPartida[nombre].transform.rotation = Quaternion.Euler(0, 0, rot);
             }
             else
             {
