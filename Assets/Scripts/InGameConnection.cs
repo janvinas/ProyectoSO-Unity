@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using TMPro;
@@ -12,12 +13,13 @@ using UnityEngine.UI;
 
 public class InGameConnection : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI clasificacion;
     public GameObject otherPlayerPrefab;
     public GameObject gameArea;
-    static public SortedList<float,string> tiemposJugadores = new SortedList<float, string>();
     Socket server = PantallaPrincipal.server;
     ConcurrentQueue<string> queue = PantallaPrincipal.responseQueue;
     Dictionary<string, GameObject> jugadoresEnPartida = new Dictionary<string, GameObject>();
+
     void Start()
     {
         InvokeRepeating("SendPlayerInformation", 0f, 0.05f);
@@ -98,6 +100,6 @@ public class InGameConnection : MonoBehaviour
         string[] trozos = mensaje.Split('/');
         string nombre = trozos[0];
         float tiempo = float.Parse(trozos[1], CultureInfo.InvariantCulture.NumberFormat);
-        tiemposJugadores.Add(tiempo,nombre);
+        clasificacion.text += name + ": " + tiempo;
     }
 }
