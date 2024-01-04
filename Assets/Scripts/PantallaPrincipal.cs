@@ -348,6 +348,10 @@ public class PantallaPrincipal : MonoBehaviour
 
     public void DesconectarServidor()
     {
+        
+        //poner todas las variables en null.
+
+
 
         if (server == null || !server.Connected)
         {
@@ -402,4 +406,8 @@ public class PantallaPrincipal : MonoBehaviour
 
     }
 
+    public void Desconectar_OnClick()
+    {
+        DesconectarServidor();
+    }
 }
