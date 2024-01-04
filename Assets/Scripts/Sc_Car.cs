@@ -126,7 +126,11 @@ public class Sc_Car : MonoBehaviour
             if(vueltas==vueltasMax-1)
             {
                 timerMax = currentTime;
-                _temporizadorMax.text = timerMax.ToString("0:00.000");
+                int _minutos = Mathf.FloorToInt(timerMax / 60);
+                int _segundos = Mathf.FloorToInt(timerMax % 60);
+                float _milisegundos = (timerMax % 1) * 1000;
+
+                _temporizadorMax.text = string.Format("{0:00}:{1:00}:{2:000}", _minutos, _segundos, _milisegundos);
             }
             else if(currentTime-timerMax<timerMax)
             {
@@ -135,7 +139,14 @@ public class Sc_Car : MonoBehaviour
             }
         }
         currentTime+=Time.deltaTime;
-        _temporizador.text = currentTime.ToString("0:00.000");
+
+        int minutos = Mathf.FloorToInt(currentTime / 60);
+        int segundos = Mathf.FloorToInt(currentTime % 60);
+        float milisegundos = (currentTime % 1) * 1000;
+
+        _temporizador.text = string.Format("{0:00}:{1:00}:{2:000}", minutos, segundos, milisegundos);
+
+
     }
     void quitarUtlimaVuelta()
     {
