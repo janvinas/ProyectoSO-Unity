@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Net.Sockets;
+using System.Text;
 
 public class Sc_Car : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class Sc_Car : MonoBehaviour
     [SerializeField] GameObject ultimaVelta;
     [SerializeField] GameObject finCarrera;
     [SerializeField] Sc_MenuBehavior sc_MenuBehavior;
+    Socket server = PantallaPrincipal.server;
     public float Velocidad;
     public float nitro;
     private float mHorizontal,mVertical;
@@ -22,6 +25,7 @@ public class Sc_Car : MonoBehaviour
     public int contNitro = 0;
     public TextMeshProUGUI texto;
     private Text NombreUsuario;
+    private bool enviado;
     
     void Start()
     {
@@ -36,6 +40,7 @@ public class Sc_Car : MonoBehaviour
         gameObject.GetComponent<Renderer>().material.color = colorPrincipal;
         NombreUsuario = transform.Find("Name").Find("Name").GetComponent<Text>();
         NombreUsuario.text = PantallaPrincipal.usuario;
+        enviado=false;
     }
     void Update()
     {
@@ -60,6 +65,9 @@ public class Sc_Car : MonoBehaviour
             Velocidad=0f;
             meta=true;
             finCarrera.SetActive(true);
+            if(!enviado)
+                enviarTiempos();
+                enviado=true;
         }
         if (Input.GetKeyDown(KeyCode.N))// Verifica si la tecla "N" est� siendo presionada, y llama a la funcion activarNitro
         {
@@ -142,5 +150,13 @@ public class Sc_Car : MonoBehaviour
     {
         Velocidad = nitro * Velocidad;
         Invoke("VelocidadNormal", tiempoDuracionNitro);  // Invoca la funci�n "VelocidadNormal" despu�s del tiempo especificado
+    }
+    void enviarTiempos()
+    {
+        string name = PantallaPrincipal.usuario;
+        int idPartida = PantallaPrincipal.idPartida;
+        string mensaje = $"17/{idPartida}/{name}/{currentTime}";
+        byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
+        server.Send(bytes);
     }
 }
