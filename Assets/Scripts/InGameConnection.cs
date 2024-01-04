@@ -14,7 +14,7 @@ public class InGameConnection : MonoBehaviour
 {
     public GameObject otherPlayerPrefab;
     public GameObject gameArea;
-
+    static public SortedList<float,string> tiemposJugadores = new SortedList<float, string>();
     Socket server = PantallaPrincipal.server;
     ConcurrentQueue<string> queue = PantallaPrincipal.responseQueue;
     Dictionary<string, GameObject> jugadoresEnPartida = new Dictionary<string, GameObject>();
@@ -57,6 +57,9 @@ public class InGameConnection : MonoBehaviour
             case 14:
                 ActualizarPosicionJugadores(mensaje);
                 break;
+            case 18:
+                MostrarTiempos(mensaje);
+                break;
         }
     }
 
@@ -87,5 +90,12 @@ public class InGameConnection : MonoBehaviour
             i += 4;
 
         }
+    }
+    void MostrarTiempos(string mensaje)
+    {
+        string[] trozos = mensaje.Split('/');
+        string nombre = trozos[0];
+        float tiempo = float.Parse(trozos[1], CultureInfo.InvariantCulture.NumberFormat);
+        tiemposJugadores.Add(tiempo,nombre);
     }
 }
