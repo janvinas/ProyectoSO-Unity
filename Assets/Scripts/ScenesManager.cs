@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class ScenesManager : MonoBehaviour
 {
     public static ScenesManager Instance;
-    public static Color colorPrincipal = Color.white;
+    public static Sprite colorPrincipal;
     private void Awake()
     {
         Instance = this;

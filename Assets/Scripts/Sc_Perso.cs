@@ -6,20 +6,11 @@ using UnityEngine.UI;
 
 public class Sc_Perso : MonoBehaviour
 {
-    public Color colorSelected;
-    private Button _botonRojo;
-    private Button _botonAzul;
-    private Button _botonAmarillo;
-    private Button _botonVerde;
-    private Button _botonMorado;
-    private Button _botonBlanco;
+    public Sprite colorSelected;
+    public Sprite spriteBlanco, spriteRojo, spriteAzul, spriteAmarillo, spriteVerde, spriteMorado;
+    private Button _botonRojo, _botonAzul, _botonAmarillo,_botonVerde, _botonMorado, _botonBlanco;
     private GameObject[] colorButtons;
-    GameObject Rojo;
-    GameObject Azul;
-    GameObject Amarillo;
-    GameObject Verde;
-    GameObject Morado;
-    GameObject Blanco;
+    GameObject Rojo, Azul, Amarillo, Verde, Morado, Blanco;
 
 
     void Start()
@@ -38,7 +29,7 @@ public class Sc_Perso : MonoBehaviour
         _botonBlanco = Blanco.GetComponent<Button>();
         colorButtons = new GameObject[] { Rojo, Azul, Amarillo, Verde, Morado, Blanco };
 
-        colorSelected = Color.white;
+        colorSelected = spriteBlanco;
         Blanco.transform.GetChild(0).GetComponent<Image>().color = new Color32(255, 215, 0, 255);
         
         _botonRojo.onClick.AddListener(colorRojo);
@@ -55,7 +46,7 @@ public class Sc_Perso : MonoBehaviour
     }
     void colorRojo()
     {
-        colorSelected = Color.red;
+        colorSelected = spriteRojo;
         foreach (GameObject colorButton in colorButtons)
         {
             colorButton.transform.GetChild(0).GetComponent<Image>().color = Color.white;
@@ -64,7 +55,7 @@ public class Sc_Perso : MonoBehaviour
     }
     void colorAzul()
     {
-        colorSelected = Color.blue;
+        colorSelected = spriteAzul;
         foreach (GameObject  colorButton in colorButtons)
         {
             colorButton.transform.GetChild(0).GetComponent<Image>().color = Color.white;
@@ -73,7 +64,7 @@ public class Sc_Perso : MonoBehaviour
     }
     void colorAmarillo()
     {
-        colorSelected = Color.yellow;
+        colorSelected = spriteAmarillo;
         foreach (GameObject colorButton in colorButtons)
         {
             colorButton.transform.GetChild(0).GetComponent<Image>().color = Color.white;
@@ -82,7 +73,7 @@ public class Sc_Perso : MonoBehaviour
     }
     void colorVerde()
     {
-        colorSelected = Color.green;
+        colorSelected = spriteVerde;
         foreach (GameObject colorButton in colorButtons)
         {
             colorButton.transform.GetChild(0).GetComponent<Image>().color = Color.white;
@@ -91,7 +82,7 @@ public class Sc_Perso : MonoBehaviour
     }
     void colorMorado()
     {
-        colorSelected = new Color(128, 0, 128, 255);
+        colorSelected = spriteMorado;
         foreach (GameObject colorButton in colorButtons)
         {
             colorButton.transform.GetChild(0).GetComponent<Image>().color = Color.white;
@@ -100,7 +91,7 @@ public class Sc_Perso : MonoBehaviour
     }
     void colorBlanco()
     {
-        colorSelected = Color.white;
+        colorSelected = spriteBlanco;
         foreach (GameObject colorButton in colorButtons)
         {
             colorButton.transform.GetChild(0).GetComponent<Image>().color = Color.white;

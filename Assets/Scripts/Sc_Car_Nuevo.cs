@@ -32,7 +32,7 @@ public class Sc_Car_Nuevo : MonoBehaviour
         meta=false;
         mostrado=false;
         vueltas=vueltasMax;
-        colorPrincipal = ScenesManager.colorPrincipal;
+        //colorPrincipal = ScenesManager.colorPrincipal;
         gameObject.GetComponent<Renderer>().material.color = colorPrincipal;
     }
     void Update()

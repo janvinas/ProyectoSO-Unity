@@ -14,12 +14,15 @@ using UnityEngine.UI;
 public class InGameConnection : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI clasificacion;
+    public Sprite spriteBlanco, spriteRojo, spriteAzul, spriteAmarillo, spriteVerde, spriteMorado;
+    private Sprite spriteSeleccionado;
     public GameObject otherPlayerPrefab;
     public GameObject gameArea;
     Socket server = PantallaPrincipal.server;
     ConcurrentQueue<string> queue = PantallaPrincipal.responseQueue;
     Dictionary<string, GameObject> jugadoresEnPartida = new Dictionary<string, GameObject>();
     int posicion=0;
+    int color;
 
     void Start()
     {
@@ -44,8 +47,19 @@ public class InGameConnection : MonoBehaviour
         string rot = this.transform.rotation.eulerAngles.z.ToString("0.0000", CultureInfo.InvariantCulture);
         string name = PantallaPrincipal.usuario;
         int idPartida = PantallaPrincipal.idPartida;
-
-        string mensaje = $"14/{idPartida}/{name}/{x}/{y}/{rot}";
+        if(ScenesManager.colorPrincipal==spriteRojo)
+            color=0;
+        else if(ScenesManager.colorPrincipal==spriteAmarillo)
+            color=1;
+        else if(ScenesManager.colorPrincipal==spriteVerde)
+            color=2;
+        else if(ScenesManager.colorPrincipal==spriteAzul)
+            color=3;
+        else if(ScenesManager.colorPrincipal==spriteMorado)
+            color=4;
+        else if(ScenesManager.colorPrincipal==spriteBlanco)
+            color=5;
+        string mensaje = $"14/{idPartida}/{name}/{x}/{y}/{rot}/{color}";
         byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
         server.Send(bytes);
     }
@@ -63,6 +77,9 @@ public class InGameConnection : MonoBehaviour
             case 18:
                 MostrarTiempos(mensaje);
                 break;
+            case 19:
+
+                break;
         }
     }
 
@@ -76,11 +93,25 @@ public class InGameConnection : MonoBehaviour
             float x = float.Parse(trozos[i + 1], CultureInfo.InvariantCulture.NumberFormat);
             float y = float.Parse(trozos[i + 2], CultureInfo.InvariantCulture.NumberFormat);
             float rot = float.Parse(trozos[i + 3], CultureInfo.InvariantCulture.NumberFormat);
+            int colorSeleccionado = int.Parse(trozos[i + 4], CultureInfo.InvariantCulture.NumberFormat);
+            if(colorSeleccionado==0)
+                spriteSeleccionado=spriteRojo;
+            else if(colorSeleccionado==1)
+                spriteSeleccionado=spriteAmarillo;
+            else if(colorSeleccionado==2)
+                spriteSeleccionado=spriteVerde;
+            else if(colorSeleccionado==3)
+                spriteSeleccionado=spriteAzul;
+            else if(colorSeleccionado==4)
+                spriteSeleccionado=spriteAzul;
+            else if(colorSeleccionado==5)
+                spriteSeleccionado=spriteBlanco;
             if (jugadoresEnPartida.ContainsKey(nombre))
             {
                 jugadoresEnPartida[nombre].transform.position = new Vector2(x, y);
                 jugadoresEnPartida[nombre].transform.rotation = Quaternion.Euler(0, 0, rot);
                 jugadoresEnPartida[nombre].transform.Find("Name").rotation = Quaternion.Euler(0, 0, 0);
+                jugadoresEnPartida[nombre].GetComponent<SpriteRenderer>().sprite=spriteSeleccionado;
             }
             else
             {

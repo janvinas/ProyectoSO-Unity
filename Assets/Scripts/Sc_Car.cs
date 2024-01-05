@@ -21,7 +21,7 @@ public class Sc_Car : MonoBehaviour
     private float currentTime = 0f;
     public int vueltasMax=3,vueltas;
     private float timerMax=0f;
-    private Color colorPrincipal;
+    private Sprite colorPrincipal;
     public float tiempoDuracionNitro = 0.5f;
     public int contNitro = 0;
     public TextMeshProUGUI texto;
@@ -38,7 +38,7 @@ public class Sc_Car : MonoBehaviour
         mostrado=false;
         vueltas=vueltasMax;
         colorPrincipal = ScenesManager.colorPrincipal;
-        gameObject.GetComponent<Renderer>().material.color = colorPrincipal;
+        gameObject.GetComponent<SpriteRenderer>().sprite = colorPrincipal;
         NombreUsuario = transform.Find("Name").Find("Name").GetComponent<Text>();
         NombreUsuario.text = PantallaPrincipal.usuario;
         enviado=false;
