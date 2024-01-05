@@ -9,7 +9,6 @@ public class ScenesManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        colorPrincipal=spriteBlanco;
     }
     public enum Scene
     {

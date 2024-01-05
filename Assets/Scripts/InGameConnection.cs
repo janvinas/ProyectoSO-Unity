@@ -8,7 +8,6 @@ using System.Net.Sockets;
 using System.Text;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,17 +47,17 @@ public class InGameConnection : MonoBehaviour
         string rot = this.transform.rotation.eulerAngles.z.ToString("0.0000", CultureInfo.InvariantCulture);
         string name = PantallaPrincipal.usuario;
         int idPartida = PantallaPrincipal.idPartida;
-        if(ScenesManager.colorPrincipal.GetSpriteID().Equals(spriteRojo.GetSpriteID()))
+        if(ScenesManager.colorPrincipal.name==spriteRojo.name)
             color=0;
-        else if(ScenesManager.colorPrincipal.GetSpriteID().Equals(spriteAmarillo.GetSpriteID()))
+        else if(ScenesManager.colorPrincipal.name==spriteAmarillo.name)
             color=1;
-        else if(ScenesManager.colorPrincipal.GetSpriteID().Equals(spriteVerde.GetSpriteID()))
+        else if(ScenesManager.colorPrincipal.name==spriteVerde.name)
             color=2;
-        else if(ScenesManager.colorPrincipal.GetSpriteID().Equals(spriteAzul.GetSpriteID()))
+        else if(ScenesManager.colorPrincipal.name==spriteAzul.name)
             color=3;
-        else if(ScenesManager.colorPrincipal.GetSpriteID().Equals(spriteMorado.GetSpriteID()))
+        else if(ScenesManager.colorPrincipal.name==spriteMorado.name)
             color=4;
-        else if(ScenesManager.colorPrincipal.GetSpriteID().Equals(spriteBlanco.GetSpriteID()))
+        else if(ScenesManager.colorPrincipal.name==spriteBlanco.name)
             color=5;
         string mensaje = $"14/{idPartida}/{name}/{x}/{y}/{rot}/{color}";
         byte[] bytes = Encoding.ASCII.GetBytes(mensaje);

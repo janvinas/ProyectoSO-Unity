@@ -31,7 +31,7 @@ public class PantallaPrincipal : MonoBehaviour
     private Button _personalizar;
     public static string usuario = null;
     public static int idPartida = -1;
-
+    public static bool host=false;
     private UiElements uiElements;
     [SerializeField] Login login;
     [SerializeField] Register register;
@@ -204,7 +204,7 @@ public class PantallaPrincipal : MonoBehaviour
 
         byte[] msg = Encoding.ASCII.GetBytes(message);
         server.Send(msg);
-
+        host=true;
         uiElements.mainPanelChat.SetActive(true);
         uiElements.mainPanelIniciarPartida.SetActive(true);
 
@@ -240,7 +240,7 @@ public class PantallaPrincipal : MonoBehaviour
     public void Start()
     {
         uiElements = this.GetComponent<UiElements>();
-
+        uiElements.mainPanelConnectionIndicator.color = Color.red;
         //si el servidor ja est� connectat:
         if(server != null && server.Connected)
         {
@@ -257,7 +257,10 @@ public class PantallaPrincipal : MonoBehaviour
                 uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
                 uiElements.mainPanelConnectionIndicator.color = Color.green;
                 uiElements.mainPanelUsername.text = usuario;
-
+                uiElements.mainPanelDesconectarButton.interactable = true;
+                Debug.Log(host.ToString());
+                if(host)
+                    uiElements.mainPanelIniciarPartida.SetActive(true);
                 //uiElements.mainPanelInvitarJugadores.interactable = false;
                 uiElements.mainPanelChat.SetActive(idPartida != -1);
             }
