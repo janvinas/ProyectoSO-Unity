@@ -344,6 +344,7 @@ public class PantallaPrincipal : MonoBehaviour
         ThreadStart ts = delegate { AtenderServidor(); };
         threadServidor = new Thread(ts);
         threadServidor.Start();
+        uiElements.mainPanelDesconectarButton.interactable = true;
     }
 
     public void DesconectarServidor()
@@ -363,12 +364,12 @@ public class PantallaPrincipal : MonoBehaviour
         server.Send(msg);
         // Se terminó el servicio. 
         // Nos desconectamos
-        uiElements.mainPanel.color = Color.gray;
         if(threadServidor.IsAlive) threadServidor.Abort();
         server.Shutdown(SocketShutdown.Both);
         server.Close();
-
         
+
+
     }
 
     public void AbrirLogin()
@@ -409,5 +410,10 @@ public class PantallaPrincipal : MonoBehaviour
     public void Desconectar_OnClick()
     {
         DesconectarServidor();
+        uiElements.mainPanelDesconectarButton.interactable = false;
+        uiElements.mainPanelConnectButton.interactable = true;
+        uiElements.mainPanelRegisterButton.interactable = false;
+        uiElements.mainPanelLoginButton.interactable = false;
+        uiElements.mainPanelConnectionIndicator.color = Color.white;
     }
 }
