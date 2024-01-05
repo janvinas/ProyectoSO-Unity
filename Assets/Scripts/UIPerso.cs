@@ -10,7 +10,7 @@ public class UIPerso : MonoBehaviour
     }
     private void SalirJuego()
     {
-        ScenesManager.Instance.LoadNewGame();
+        ScenesManager.Instance.LoadMain();
     }
 
 }

@@ -28,7 +28,7 @@ public class PantallaPrincipal : MonoBehaviour
             this.invitado = invitado;
         }
     }
-
+    private Button _personalizar;
     public static string usuario = null;
     public static int idPartida = -1;
 
@@ -127,7 +127,7 @@ public class PantallaPrincipal : MonoBehaviour
         int usuariosConectados = Convert.ToInt32(trozos[0]);
         uiElements.mainPanelNumeroConectados.text = "Conectados: " + usuariosConectados + "\n";
 
-        //elimina los conectados que ya no lo están
+        //elimina los conectados que ya no lo estï¿½n
         foreach(Conectado c in listaConectados.ToList())
         {
             if (!trozos.Contains(c.nombre))
@@ -136,7 +136,7 @@ public class PantallaPrincipal : MonoBehaviour
             }
         }
 
-        //añade los conectados que faltaban
+        //aï¿½ade los conectados que faltaban
         for(int i = 1; i < trozos.Length; i++)
         {
             if (!listaConectados.Any(c => c.nombre == trozos[i]))
@@ -155,7 +155,7 @@ public class PantallaPrincipal : MonoBehaviour
         }
 
         int j = 0;
-        //añade todos los conectados a la lista de descendientes
+        //aï¿½ade todos los conectados a la lista de descendientes
         foreach (Conectado c in listaConectados)
         {
             GameObject text = new GameObject("username_" + c.nombre);
@@ -192,7 +192,7 @@ public class PantallaPrincipal : MonoBehaviour
 
     public void InvitarSeleccionados()
     {
-        //obté una llista dels connectats que han estat convidats
+        //obtï¿½ una llista dels connectats que han estat convidats
         List<Conectado> invitados = listaConectados.FindAll(c => c.invitado);
         if(invitados.Count == 0) return;
 
@@ -241,16 +241,22 @@ public class PantallaPrincipal : MonoBehaviour
     {
         uiElements = this.GetComponent<UiElements>();
 
-        //si el servidor ja està connectat:
+        //si el servidor ja estï¿½ connectat:
         if(server != null && server.Connected)
         {
             uiElements.mainPanelConnectButton.interactable = false;
+            string mensaje = "7/";  
+            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+            server.Send(msg);
+
             if(usuario != null)
             {
-                //sessió ja iniciada:
+                //sessiï¿½ ja iniciada:
                 uiElements.mainPanelUserInfo.gameObject.SetActive(true);
                 uiElements.mainPanelListaConectados.gameObject.SetActive(true);
                 uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
+                uiElements.mainPanelConnectionIndicator.color = Color.green;
+                uiElements.mainPanelUsername.text = usuario;
 
                 //uiElements.mainPanelInvitarJugadores.interactable = false;
                 uiElements.mainPanelChat.SetActive(idPartida != -1);
@@ -261,6 +267,9 @@ public class PantallaPrincipal : MonoBehaviour
                 uiElements.mainPanelRegisterButton.interactable = false;
             }
         }
+        GameObject boton2 = GameObject.Find("Personalizar");
+        _personalizar = boton2.GetComponent<Button>();
+        _personalizar.onClick.AddListener(CargarPerso);
     }
 
     private void Update()
@@ -272,7 +281,10 @@ public class PantallaPrincipal : MonoBehaviour
         }
 
     }
-
+    private void CargarPerso()
+    {
+        ScenesManager.Instance.LoadPerso();
+    }
     private void OnApplicationQuit()
     {
         if (server != null && server.Connected)
@@ -294,7 +306,7 @@ public class PantallaPrincipal : MonoBehaviour
 
         string[] trozos = uiElements.mainPanelServerAddress.GetComponent<TMP_InputField>().text.Split(":");
         if(trozos.Length == 0) {
-            uiElements.mainPanelMessageBox.text = "Proporciona una dirección de servidor!";
+            uiElements.mainPanelMessageBox.text = "Proporciona una direcciï¿½n de servidor!";
             return;
         }else if(trozos.Length == 2)
         {
@@ -315,7 +327,7 @@ public class PantallaPrincipal : MonoBehaviour
             ipep = new IPEndPoint(direc, port);
         }
         catch (Exception) {
-            uiElements.mainPanelMessageBox.text = "Error resolviendo la dirección";
+            uiElements.mainPanelMessageBox.text = "Error resolviendo la direcciï¿½n";
             return;
         }
         
@@ -362,7 +374,7 @@ public class PantallaPrincipal : MonoBehaviour
         string mensaje = "0/";
         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
-        // Se terminó el servicio. 
+        // Se terminï¿½ el servicio. 
         // Nos desconectamos
         if(threadServidor.IsAlive) threadServidor.Abort();
         server.Shutdown(SocketShutdown.Both);

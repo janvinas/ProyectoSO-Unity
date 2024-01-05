@@ -47,17 +47,17 @@ public class InGameConnection : MonoBehaviour
         string rot = this.transform.rotation.eulerAngles.z.ToString("0.0000", CultureInfo.InvariantCulture);
         string name = PantallaPrincipal.usuario;
         int idPartida = PantallaPrincipal.idPartida;
-        if(ScenesManager.colorPrincipal==spriteRojo)
+        if(ScenesManager.colorPrincipal.Equals(spriteRojo))
             color=0;
-        else if(ScenesManager.colorPrincipal==spriteAmarillo)
+        else if(ScenesManager.colorPrincipal.Equals(spriteAmarillo))
             color=1;
-        else if(ScenesManager.colorPrincipal==spriteVerde)
+        else if(ScenesManager.colorPrincipal.Equals(spriteVerde))
             color=2;
-        else if(ScenesManager.colorPrincipal==spriteAzul)
+        else if(ScenesManager.colorPrincipal.Equals(spriteAzul))
             color=3;
-        else if(ScenesManager.colorPrincipal==spriteMorado)
+        else if(ScenesManager.colorPrincipal.Equals(spriteMorado))
             color=4;
-        else if(ScenesManager.colorPrincipal==spriteBlanco)
+        else if(ScenesManager.colorPrincipal.Equals(spriteBlanco))
             color=5;
         string mensaje = $"14/{idPartida}/{name}/{x}/{y}/{rot}/{color}";
         byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
@@ -123,7 +123,7 @@ public class InGameConnection : MonoBehaviour
                 jugadoresEnPartida.Add(nombre, jugador);
             }
 
-            i += 4;
+            i += 5;
 
         }
     }

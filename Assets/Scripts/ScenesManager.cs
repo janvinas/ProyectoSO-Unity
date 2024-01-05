@@ -5,9 +5,11 @@ public class ScenesManager : MonoBehaviour
 {
     public static ScenesManager Instance;
     public static Sprite colorPrincipal;
+    public Sprite spriteBlanco;
     private void Awake()
     {
         Instance = this;
+        colorPrincipal=spriteBlanco;
     }
     public enum Scene
     {
