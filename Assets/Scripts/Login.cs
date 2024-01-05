@@ -30,7 +30,7 @@ public class Login : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        server = PantallaPrincipal.server;
     }
 
     public void SendLogin()
@@ -72,7 +72,7 @@ public class Login : MonoBehaviour
             }
             else if (message == "0")
             {
-                mensaje.text = "Usuario o contraseña incorrectos";
+                mensaje.text = "Usuario o contraseï¿½a incorrectos";
                 usuario.text = "";
                 password.text = "";
             }

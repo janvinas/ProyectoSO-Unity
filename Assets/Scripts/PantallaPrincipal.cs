@@ -240,7 +240,7 @@ public class PantallaPrincipal : MonoBehaviour
     public void Start()
     {
         uiElements = this.GetComponent<UiElements>();
-        uiElements.mainPanelConnectionIndicator.color = Color.red;
+        uiElements.mainPanelConnectionIndicator.color = Color.white;
         //si el servidor ja est� connectat:
         if(server != null && server.Connected)
         {
@@ -419,16 +419,20 @@ public class PantallaPrincipal : MonoBehaviour
 
     public void CerrarPantalla()
     {
-
+        DesconectarServidor();
+        Application.Quit();
     }
 
     public void Desconectar_OnClick()
     {
+
         DesconectarServidor();
         uiElements.mainPanelDesconectarButton.interactable = false;
         uiElements.mainPanelConnectButton.interactable = true;
         uiElements.mainPanelRegisterButton.interactable = false;
         uiElements.mainPanelLoginButton.interactable = false;
+        uiElements.mainPanelChat.gameObject.SetActive(false);
+        uiElements.mainPanelListaConectados.gameObject.SetActive(false);
         uiElements.mainPanelConnectionIndicator.color = Color.white;
     }
 }
