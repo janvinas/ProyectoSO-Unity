@@ -453,13 +453,19 @@ public class PantallaPrincipal : MonoBehaviour
         {
             uiElements.mainPanelDesconectarButton.gameObject.SetActive(true);
             uiElements.mainPanelEliminarButton.gameObject.SetActive(true);
+            uiElements.mainPanelConsultasButton.gameObject.SetActive(true);
             activo=true;
         }
         else if(activo)
         {
             uiElements.mainPanelDesconectarButton.gameObject.SetActive(false);
             uiElements.mainPanelEliminarButton.gameObject.SetActive(false);
+            uiElements.mainPanelConsultasButton.gameObject.SetActive(false);
             activo=false;
         }
+    }
+    public void ConsultarParametros_OnClick()
+    {
+        ScenesManager.Instance.LoadConsultas();
     }
 }

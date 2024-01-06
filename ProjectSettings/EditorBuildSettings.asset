@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game3.unity
     guid: 224c1450ee858884d94184ada88000ef
+  - enabled: 1
+    path: Assets/Scenes/Consultas.unity
+    guid: c55bd28631b3269438c9e7c354053f32
   m_configObjects: {}

@@ -17,7 +17,8 @@ public class ScenesManager : MonoBehaviour
         Game3,
         Maps,
         Personalizar,
-        PantallaPrincipal
+        PantallaPrincipal,
+        Consultas
 
     }
     public void LoadScene(Scene scene)
@@ -51,5 +52,9 @@ public class ScenesManager : MonoBehaviour
     public void LoadPerso()
     {
         SceneManager.LoadScene(Scene.Personalizar.ToString());
+    }
+    public void LoadConsultas()
+    {
+        SceneManager.LoadScene(Scene.Consultas.ToString());
     }
 }
