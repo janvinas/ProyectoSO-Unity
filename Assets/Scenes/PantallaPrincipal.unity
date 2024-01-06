@@ -2476,7 +2476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cfd3f27c09cd90499937e916a34f284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteBlanco: {fileID: 0}
 --- !u!4 &618759851
 Transform:
   m_ObjectHideFlags: 0
@@ -9473,7 +9472,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -4.200001}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1932783438
@@ -9497,7 +9496,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7a42237a8c553624b95e59d618437d0b, type: 3}
+    m_Font: {fileID: 12800000, guid: 41ef208e59ea28e449d3b855f53320c8, type: 3}
     m_FontSize: 35
     m_FontStyle: 0
     m_BestFit: 0
