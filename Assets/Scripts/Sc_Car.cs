@@ -37,8 +37,15 @@ public class Sc_Car : MonoBehaviour
         meta=false;
         mostrado=false;
         vueltas=vueltasMax;
-        colorPrincipal = ScenesManager.colorPrincipal;
-        gameObject.GetComponent<SpriteRenderer>().sprite = colorPrincipal;
+        if(ScenesManager.colorPrincipal!=null)
+        {
+            colorPrincipal = ScenesManager.colorPrincipal;
+            gameObject.GetComponent<SpriteRenderer>().sprite = colorPrincipal;
+        }
+        else
+        {
+            ScenesManager.colorPrincipal=gameObject.GetComponent<SpriteRenderer>().sprite;
+        }
         NombreUsuario = transform.Find("Name").Find("Name").GetComponent<Text>();
         NombreUsuario.text = PantallaPrincipal.usuario;
         enviado=false;
@@ -117,7 +124,7 @@ public class Sc_Car : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Pista"))
         {
-            rigid.drag = 30f;
+            rigid.drag = 20f;
         }
     }
     private void conteo()

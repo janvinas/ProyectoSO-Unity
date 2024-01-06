@@ -414,6 +414,9 @@ public class PantallaPrincipal : MonoBehaviour
             case "2":
                 ScenesManager.Instance.LoadMap2();
                 break;
+            case "3":
+                ScenesManager.Instance.LoadMap3();
+                break;
         }
     }
 
@@ -433,6 +436,7 @@ public class PantallaPrincipal : MonoBehaviour
         uiElements.mainPanelLoginButton.interactable = false;
         uiElements.mainPanelChat.gameObject.SetActive(false);
         uiElements.mainPanelListaConectados.gameObject.SetActive(false);
+        uiElements.mainPanelIniciarPartida.SetActive(false);
         uiElements.mainPanelConnectionIndicator.color = Color.white;
     }
 }

@@ -9,21 +9,17 @@ public class UIGame : MonoBehaviour
     private Button _map3Game;
     [SerializeField] Button _map2Game;
     [SerializeField] Button _salirGame;
-    private Button _personalizar;
     void Start()
     {
         GameObject boton1 = GameObject.Find("Mapa1");
         _map1Game = boton1.GetComponent<Button>();
         GameObject boton3 = GameObject.Find("Mapa3");
         _map3Game = boton3.GetComponent<Button>();
-        GameObject boton2 = GameObject.Find("Personalizar");
-        _personalizar = boton2.GetComponent<Button>();
 
         _map1Game.onClick.AddListener(Map1);
         _map2Game.onClick.AddListener(Map2);
         _map3Game.onClick.AddListener(Map3);
         _salirGame.onClick.AddListener(Return3);
-        _personalizar.onClick.AddListener(Return4);
     }
     
     private void Map1()
@@ -44,10 +40,6 @@ public class UIGame : MonoBehaviour
     private void Return3()
     {
         ScenesManager.Instance.LoadMain();
-    }
-    private void Return4()
-    {
-        ScenesManager.Instance.LoadPerso();
     }
 
     private void SendStartingMessage(string mapa)
