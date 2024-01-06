@@ -32,6 +32,7 @@ public class PantallaPrincipal : MonoBehaviour
     public static string usuario = null;
     public static int idPartida = -1;
     public static bool host=false;
+    public static bool activo = false;
     private UiElements uiElements;
     [SerializeField] Login login;
     [SerializeField] Register register;
@@ -438,5 +439,27 @@ public class PantallaPrincipal : MonoBehaviour
         uiElements.mainPanelListaConectados.gameObject.SetActive(false);
         uiElements.mainPanelIniciarPartida.SetActive(false);
         uiElements.mainPanelConnectionIndicator.color = Color.white;
+        uiElements.mainPanelUserInfo.gameObject.SetActive(false);
+    }
+    public void EliminarUsuario_OnClick()
+    {
+        string mensaje = "19/" + uiElements.mainPanelUsername.text;  
+        byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+        server.Send(msg);
+    }
+    public void MostrarMasOpciones()
+    {
+        if(!activo)
+        {
+            uiElements.mainPanelDesconectarButton.gameObject.SetActive(true);
+            uiElements.mainPanelEliminarButton.gameObject.SetActive(true);
+            activo=true;
+        }
+        else if(activo)
+        {
+            uiElements.mainPanelDesconectarButton.gameObject.SetActive(false);
+            uiElements.mainPanelEliminarButton.gameObject.SetActive(false);
+            activo=false;
+        }
     }
 }

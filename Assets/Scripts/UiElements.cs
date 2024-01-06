@@ -21,6 +21,7 @@ public class UiElements : MonoBehaviour
     public GameObject mainPanelChat;
     public GameObject mainPanelChatInput;
     public Button mainPanelDesconectarButton;
+    public Button mainPanelEliminarButton;
 
     public Image notificionInvitacionPanel;
 
