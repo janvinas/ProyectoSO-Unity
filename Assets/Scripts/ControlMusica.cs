@@ -18,18 +18,6 @@ public class ControlMusica : MonoBehaviour
         imagen = GetComponent<Image>();
         audioSource = GetComponent<AudioSource>();
     }
-
-    void Update()
-    {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (audioSource.isPlaying)
-                    audioSource.Pause();
-                else
-                    audioSource.UnPause();
-                ToggleMute();
-            }
-    }
     public void OnClick()
     {
         ToggleMute();
