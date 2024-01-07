@@ -242,6 +242,7 @@ public class PantallaPrincipal : MonoBehaviour
     {
         uiElements = this.GetComponent<UiElements>();
         uiElements.mainPanelConnectionIndicator.color = Color.white;
+        activo=false;
         //si el servidor ja est� connectat:
         if(server != null && server.Connected)
         {
