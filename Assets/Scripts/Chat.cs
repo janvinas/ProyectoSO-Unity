@@ -39,7 +39,7 @@ public class Chat : MonoBehaviour
         Debug.Log("2");
         uiElements.mainPanelChatInput.GetComponent<TMP_InputField>().Select();
         uiElements.mainPanelChatInput.GetComponent<TMP_InputField>().ActivateInputField();
-        string text = uiElements.mainPanelChatInput.GetComponent<TMP_InputField>().text.Replace("\n", "");
+        string text = uiElements.mainPanelChatInput.GetComponent<TMP_InputField>().text.Replace("/","").Replace("\n", "");
         if (text == "") return;
 
         Debug.Log("3");

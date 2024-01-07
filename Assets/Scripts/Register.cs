@@ -78,21 +78,21 @@ public class Register : MonoBehaviour
         }
         else if (password.text != repetirPassword.text)
         {
-            mensaje.text = "Las contraseñas no coinciden";
+            mensaje.text = "Las contraseï¿½as no coinciden";
             return;
         }
         else if (genero.text != "M" && genero.text != "H")
         {
-            mensaje.text = "Valor incorrecto introducido en 'Género'";
+            mensaje.text = "Valor incorrecto introducido en 'Gï¿½nero'";
             return;
         }else if (email.text.IndexOf('@') <= 0)
         {
-            mensaje.text = "Formato de correo erróneo";
+            mensaje.text = "Formato de correo errï¿½neo";
             return;
         }
 
         Socket server = PantallaPrincipal.server;
-        string message = "2/" + usuario.text + "/" + password.text + "/" + email.text + "/" + genero.text;
+        string message = "2/" + usuario.text.Replace("/","") + "/" + password.text.Replace("/","") + "/" + email.text.Replace("/","") + "/" + genero.text.Replace("/","");
         Debug.Log("enviando respuesta" + message);
         // Enviamos al servidor el nombre tecleado
         byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);
@@ -114,7 +114,7 @@ public class Register : MonoBehaviour
             return;
         }
 
-        string mensaje = "3/" + inputField.text;
+        string mensaje = "3/" + inputField.text.Replace("/","");
         // Enviamos al servidor el nombre tecleado
         byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);

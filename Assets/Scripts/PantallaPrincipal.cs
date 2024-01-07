@@ -320,7 +320,7 @@ public class PantallaPrincipal : MonoBehaviour
         int port = 50065;
         IPEndPoint ipep;
 
-        string[] trozos = uiElements.mainPanelServerAddress.GetComponent<TMP_InputField>().text.Split(":");
+        string[] trozos = uiElements.mainPanelServerAddress.GetComponent<TMP_InputField>().text.Replace("/","").Split(":");
         if(trozos.Length == 0) {
             uiElements.mainPanelMessageBox.text = "Proporciona una direcci�n de servidor!";
             return;

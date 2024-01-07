@@ -62,7 +62,7 @@ public class Sc_Consultas : MonoBehaviour
     public void ConsultaResultados()
     {
         string name = PantallaPrincipal.usuario;
-        string jugadorAConsultar=textBox.GetComponent<TMP_InputField>().text;
+        string jugadorAConsultar=textBox.GetComponent<TMP_InputField>().text.Replace("/","");
         if(jugadorAConsultar!="")
         {
             string mensaje = $"21/{name}/{jugadorAConsultar}";

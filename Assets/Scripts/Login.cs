@@ -44,7 +44,7 @@ public class Login : MonoBehaviour
             return;
         }
 
-        string mensaje = "1/" + usuario.text + "/" + password.text;
+        string mensaje = "1/" + usuario.text.Replace("/","") + "/" + password.text.Replace("/","");
         // Enviamos al servidor el nombre tecleado
         byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
@@ -59,16 +59,17 @@ public class Login : MonoBehaviour
         {
             if (message == "1")
             {
-                PantallaPrincipal.usuario = usuario.text;
+                PantallaPrincipal.usuario = usuario.text.Replace("/","");
 
                 uiElements.mainPanelUserInfo.gameObject.SetActive(true);
-                uiElements.mainPanelUsername.text = usuario.text;
+                uiElements.mainPanelUsername.text = usuario.text.Replace("/","");
                 uiElements.mainPanelListaConectados.gameObject.SetActive(true);
                 uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
                 uiElements.mainPanelLoginButton.interactable = false;
                 uiElements.mainPanelRegisterButton.interactable = false;
 
                 //pide la experiencia del usuario
+                Debug.Log(PantallaPrincipal.usuario);
                 string mensaje = "23/" + PantallaPrincipal.usuario;
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
