@@ -42,6 +42,9 @@ public class Sc_Consultas : MonoBehaviour
             case 21:
                 EscribirResultados(mensaje);
                 break;
+            case 22:
+                
+                break;
         }
     }
 
@@ -61,7 +64,7 @@ public class Sc_Consultas : MonoBehaviour
         string jugadorAConsultar=textBox.GetComponent<TMP_InputField>().text;
         if(jugadorAConsultar!="")
         {
-            string mensaje = $"20/{name}/{jugadorAConsultar}";
+            string mensaje = $"21/{name}/{jugadorAConsultar}";
             byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
             server.Send(bytes);
             titulo.text = "Resultados contra " + jugadorAConsultar + ":";
@@ -69,7 +72,21 @@ public class Sc_Consultas : MonoBehaviour
     }
     private void EscribirJugadores(string mensaje)
     {
-
+        if(mensaje=="0")
+        {
+            textToDisplay.text = "No has jugado contra nadie";
+        }
+        else
+        {
+            string[] trozos = mensaje.Split('/');
+            int i = 0;
+            while (i < trozos.Length)
+            {
+                textToDisplay.text += " - " + trozos[i] + "\n";
+                i++;
+            }
+        }
+        
     }
     private void EscribirResultados(string mensaje)
     {

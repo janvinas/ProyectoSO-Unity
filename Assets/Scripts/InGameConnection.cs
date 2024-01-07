@@ -18,6 +18,7 @@ public class InGameConnection : MonoBehaviour
     private Sprite spriteSeleccionado;
     public GameObject otherPlayerPrefab;
     public GameObject gameArea;
+    public Button botonSalir;
     Socket server = PantallaPrincipal.server;
     ConcurrentQueue<string> queue = PantallaPrincipal.responseQueue;
     Dictionary<string, GameObject> jugadoresEnPartida = new Dictionary<string, GameObject>();
@@ -27,6 +28,7 @@ public class InGameConnection : MonoBehaviour
     void Start()
     {
         InvokeRepeating("SendPlayerInformation", 0f, 0.05f);
+        botonSalir.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -78,9 +80,14 @@ public class InGameConnection : MonoBehaviour
                 MostrarTiempos(mensaje);
                 break;
             case 19:
-
+                MostrarBotonSalir();
                 break;
         }
+    }
+
+    private void MostrarBotonSalir()
+    {
+        botonSalir.gameObject.SetActive(true);
     }
 
     void ActualizarPosicionJugadores(string mensaje)
