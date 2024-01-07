@@ -259,6 +259,7 @@ public class PantallaPrincipal : MonoBehaviour
         if(server != null && server.Connected)
         {
             uiElements.mainPanelConnectButton.interactable = false;
+            uiElements.mainPanelConnectionIndicator.color = Color.green;
             string mensaje = "7/";  
             byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
@@ -269,16 +270,15 @@ public class PantallaPrincipal : MonoBehaviour
                 uiElements.mainPanelUserInfo.gameObject.SetActive(true);
                 uiElements.mainPanelListaConectados.gameObject.SetActive(true);
                 uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
-                uiElements.mainPanelConnectionIndicator.color = Color.green;
                 uiElements.mainPanelUsername.text = usuario;
                 uiElements.mainPanelDesconectarButton.interactable = true;
                 uiElements.mainPanelLoginButton.interactable = false;
                 uiElements.mainPanelRegisterButton.interactable = false;
-                Debug.Log(host.ToString());
                 if(host)
                     uiElements.mainPanelIniciarPartida.SetActive(true);
                 //uiElements.mainPanelInvitarJugadores.interactable = false;
                 uiElements.mainPanelChat.SetActive(idPartida != -1);
+                uiElements.mainPanelPracticarButton.interactable = idPartida == -1;
             }
             else
             {
@@ -451,6 +451,7 @@ public class PantallaPrincipal : MonoBehaviour
     {
 
         DesconectarServidor();
+        usuario=null;
         uiElements.mainPanelDesconectarButton.interactable = false;
         uiElements.mainPanelConnectButton.interactable = true;
         uiElements.mainPanelRegisterButton.interactable = false;
@@ -463,7 +464,7 @@ public class PantallaPrincipal : MonoBehaviour
     }
     public void EliminarUsuario_OnClick()
     {
-        string mensaje = "19/" + uiElements.mainPanelUsername.text;  
+        string mensaje = "24/" + uiElements.mainPanelUsername.text;  
         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
     }
