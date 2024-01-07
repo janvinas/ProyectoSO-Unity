@@ -252,7 +252,6 @@ public class PantallaPrincipal : MonoBehaviour
     {
         uiElements = this.GetComponent<UiElements>();
         uiElements.mainPanelConnectionIndicator.color = Color.white;
-        uiElements.mainPanelMessageBox.text = "";
         activo=false;
         //si el servidor ja est� connectat:
         if(server != null && server.Connected)
@@ -282,6 +281,10 @@ public class PantallaPrincipal : MonoBehaviour
                 uiElements.mainPanelLoginButton.interactable = false;
                 uiElements.mainPanelRegisterButton.interactable = false;
             }
+        }
+        else
+        {
+            uiElements.mainPanelMessageBox.text = "Presiona \"Conectar\" para conectarte al servidor.";
         }
         GameObject boton2 = GameObject.Find("Personalizar");
         _personalizar = boton2.GetComponent<Button>();
