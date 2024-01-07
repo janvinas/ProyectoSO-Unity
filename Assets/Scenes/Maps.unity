@@ -1286,7 +1286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cfd3f27c09cd90499937e916a34f284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteBlanco: {fileID: 0}
 --- !u!1 &1814765929
 GameObject:
   m_ObjectHideFlags: 0
