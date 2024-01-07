@@ -469,4 +469,9 @@ public class PantallaPrincipal : MonoBehaviour
     {
         ScenesManager.Instance.LoadConsultas();
     }
+    public string nombreEscena;
+    public void CargarEscena_OnClick()
+    {
+        SceneManager.LoadScene(nombreEscena);
+    }
 }

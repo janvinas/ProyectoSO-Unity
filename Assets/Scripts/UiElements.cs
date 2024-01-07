@@ -23,6 +23,7 @@ public class UiElements : MonoBehaviour
     public Button mainPanelDesconectarButton;
     public Button mainPanelEliminarButton;
     public Button mainPanelConsultasButton;
+    public Button mainPanelPracticarButton;
 
     public Image notificionInvitacionPanel;
 
