@@ -217,6 +217,7 @@ public class PantallaPrincipal : MonoBehaviour
         host=true;
         uiElements.mainPanelChat.SetActive(true);
         uiElements.mainPanelIniciarPartida.SetActive(true);
+        uiElements.mainPanelPracticarButton.interactable = false;
 
     }
 
@@ -239,6 +240,7 @@ public class PantallaPrincipal : MonoBehaviour
         uiElements.notificionInvitacionPanel.gameObject.SetActive(false);
         uiElements.mainPanelChat.SetActive(aceptada);
         uiElements.mainPanelInvitarJugadores.interactable = !aceptada;
+        uiElements.mainPanelPracticarButton.interactable = false;
 
     }
 
@@ -260,8 +262,8 @@ public class PantallaPrincipal : MonoBehaviour
             string mensaje = "7/";  
             byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
-
-            if(usuario != null)
+            uiElements.mainPanelMessageBox.text = "";
+            if (usuario != null)
             {
                 //sessi� ja iniciada:
                 uiElements.mainPanelUserInfo.gameObject.SetActive(true);
@@ -270,6 +272,8 @@ public class PantallaPrincipal : MonoBehaviour
                 uiElements.mainPanelConnectionIndicator.color = Color.green;
                 uiElements.mainPanelUsername.text = usuario;
                 uiElements.mainPanelDesconectarButton.interactable = true;
+                uiElements.mainPanelLoginButton.interactable = false;
+                uiElements.mainPanelRegisterButton.interactable = false;
                 Debug.Log(host.ToString());
                 if(host)
                     uiElements.mainPanelIniciarPartida.SetActive(true);
@@ -278,8 +282,8 @@ public class PantallaPrincipal : MonoBehaviour
             }
             else
             {
-                uiElements.mainPanelLoginButton.interactable = false;
-                uiElements.mainPanelRegisterButton.interactable = false;
+                uiElements.mainPanelLoginButton.interactable = true;
+                uiElements.mainPanelRegisterButton.interactable = true;
             }
         }
         else
@@ -398,6 +402,7 @@ public class PantallaPrincipal : MonoBehaviour
         if(threadServidor.IsAlive) threadServidor.Abort();
         server.Shutdown(SocketShutdown.Both);
         server.Close();
+        uiElements.mainPanelPracticarButton.interactable = true;
         
 
 
