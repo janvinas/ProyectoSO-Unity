@@ -68,6 +68,7 @@ public class Sc_Consultas : MonoBehaviour
             byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
             server.Send(bytes);
             titulo.text = "Resultados contra " + jugadorAConsultar + ":";
+            textToDisplay.text = "";
         }
     }
     private void EscribirJugadores(string mensaje)
@@ -90,6 +91,28 @@ public class Sc_Consultas : MonoBehaviour
     }
     private void EscribirResultados(string mensaje)
     {
-        
+        if(mensaje=="0")
+        {
+            textToDisplay.text = "No has jugado contra nadie";
+        }
+        else
+        {
+            string[] trozos = mensaje.Split('/');
+            int i = 0;
+            int IDpartida=0;
+            int comp=0;
+            while (i < trozos.Length)
+            {
+                if(comp!=Convert.ToInt32(trozos[i]))
+                {
+                    textToDisplay.text += "----------------------------------------- \n";
+                    IDpartida++;
+                }
+                textToDisplay.text += IDpartida.ToString() + ". " + trozos[i+3] + "º "+ trozos[i+1] + " " + trozos[i+2]  + "\n";
+                comp=Convert.ToInt32(trozos[i]);
+                i+=4;
+                
+            }
+        }
     }
 }
