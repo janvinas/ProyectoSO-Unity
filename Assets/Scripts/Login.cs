@@ -68,6 +68,11 @@ public class Login : MonoBehaviour
                 uiElements.mainPanelLoginButton.interactable = false;
                 uiElements.mainPanelRegisterButton.interactable = false;
 
+                //pide la experiencia del usuario
+                string mensaje = "23/" + PantallaPrincipal.usuario;
+                byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+
                 ClosePanel();
             }
             else if (message == "0")

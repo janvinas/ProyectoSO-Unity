@@ -119,7 +119,16 @@ public class PantallaPrincipal : MonoBehaviour
             case 16:
                 IniciarPartida(mensaje);
                 break;
+            case 23:
+                ActualizarXP(mensaje);
+                break;
         }
+    }
+
+    private void ActualizarXP(string mensaje)
+    {
+        if (mensaje == "-1") return;
+        uiElements.mainPanelExperience.text = mensaje + "xp";
     }
 
     private void ActualizarListaConectados(string mensaje)
@@ -226,13 +235,9 @@ public class PantallaPrincipal : MonoBehaviour
         string mensaje = "10/" + idPartida.ToString() + (aceptada ? "/1" : "/0");  
         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
-        if (aceptada)
-        {
-            uiElements.notificionInvitacionPanel.gameObject.SetActive(false);
-            uiElements.mainPanelChat.SetActive(true);
-            
-        }
 
+        uiElements.notificionInvitacionPanel.gameObject.SetActive(false);
+        uiElements.mainPanelChat.SetActive(aceptada);
         uiElements.mainPanelInvitarJugadores.interactable = !aceptada;
 
     }
