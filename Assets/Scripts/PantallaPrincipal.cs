@@ -226,10 +226,15 @@ public class PantallaPrincipal : MonoBehaviour
         string mensaje = "10/" + idPartida.ToString() + (aceptada ? "/1" : "/0");  
         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
-        uiElements.notificionInvitacionPanel.gameObject.SetActive(false);
-        uiElements.mainPanelChatInput.SetActive(true);
-        uiElements.mainPanelChat.SetActive(true);
+        if (aceptada)
+        {
+            uiElements.notificionInvitacionPanel.gameObject.SetActive(false);
+            uiElements.mainPanelChat.SetActive(true);
+            
+        }
+
         uiElements.mainPanelInvitarJugadores.interactable = !aceptada;
+
     }
 
     private void InvitacionAceptadaOtro(string message)
@@ -242,6 +247,7 @@ public class PantallaPrincipal : MonoBehaviour
     {
         uiElements = this.GetComponent<UiElements>();
         uiElements.mainPanelConnectionIndicator.color = Color.white;
+        uiElements.mainPanelMessageBox.text = "";
         activo=false;
         //si el servidor ja est� connectat:
         if(server != null && server.Connected)

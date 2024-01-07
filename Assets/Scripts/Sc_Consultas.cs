@@ -93,7 +93,7 @@ public class Sc_Consultas : MonoBehaviour
     {
         if(mensaje=="0")
         {
-            textToDisplay.text = "No has jugado contra nadie";
+            textToDisplay.text = "No has jugado contra este jugador";
         }
         else
         {
