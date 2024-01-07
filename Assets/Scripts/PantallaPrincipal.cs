@@ -473,6 +473,8 @@ public class PantallaPrincipal : MonoBehaviour
         string mensaje = "24/" + uiElements.mainPanelUsername.text;  
         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
+
+        Desconectar_OnClick();
     }
     public void MostrarMasOpciones()
     {
