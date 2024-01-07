@@ -42,7 +42,7 @@ public class InGameConnection : MonoBehaviour
 
     void SendPlayerInformation()
     {
-        if (server == null || !server.Connected) return;
+        if (server == null || !server.Connected || PantallaPrincipal.idPartida == -1) return;
 
         string x = this.transform.position.x.ToString("0.0000", CultureInfo.InvariantCulture);
         string y = this.transform.position.y.ToString("0.0000", CultureInfo.InvariantCulture);

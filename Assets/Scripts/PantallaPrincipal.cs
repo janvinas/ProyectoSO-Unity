@@ -260,9 +260,6 @@ public class PantallaPrincipal : MonoBehaviour
         {
             uiElements.mainPanelConnectButton.interactable = false;
             uiElements.mainPanelConnectionIndicator.color = Color.green;
-            string mensaje = "7/";  
-            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-            server.Send(msg);
             uiElements.mainPanelMessageBox.text = "";
             if (usuario != null)
             {
@@ -279,6 +276,15 @@ public class PantallaPrincipal : MonoBehaviour
                 //uiElements.mainPanelInvitarJugadores.interactable = false;
                 uiElements.mainPanelChat.SetActive(idPartida != -1);
                 uiElements.mainPanelPracticarButton.interactable = idPartida == -1;
+
+                string mensaje = "7/";
+                byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+
+
+                mensaje = "23/" + PantallaPrincipal.usuario;
+                msg = Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
             }
             else
             {

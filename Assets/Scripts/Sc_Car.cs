@@ -172,6 +172,8 @@ public class Sc_Car : MonoBehaviour
     }
     void enviarTiempos()
     {
+        if (server == null || !server.Connected || PantallaPrincipal.idPartida == -1) return;
+
         string name = PantallaPrincipal.usuario;
         int idPartida = PantallaPrincipal.idPartida;
         string mensaje = $"17/{idPartida}/{name}/{currentTime.ToString("0.0000", CultureInfo.InvariantCulture)}/{timerMax.ToString("0.0000", CultureInfo.InvariantCulture)}";
