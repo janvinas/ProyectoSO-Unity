@@ -176,7 +176,7 @@ public class Sc_Car : MonoBehaviour
 
         string name = PantallaPrincipal.usuario;
         int idPartida = PantallaPrincipal.idPartida;
-        string mensaje = $"17/{idPartida}/{name}/{currentTime.ToString("0.0000", CultureInfo.InvariantCulture)}/{timerMax.ToString("0.0000", CultureInfo.InvariantCulture)}";
+        string mensaje = $"17/{idPartida}/{name}/{currentTime.ToString("0.0000", CultureInfo.InvariantCulture)}/{timerMax.ToString("0.0000", CultureInfo.InvariantCulture)}\n";
         byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
         server.Send(bytes);
     }

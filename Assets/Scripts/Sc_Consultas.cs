@@ -53,7 +53,7 @@ public class Sc_Consultas : MonoBehaviour
     public void ConsultarJugadores()
     {
         string name = PantallaPrincipal.usuario;
-        string mensaje = $"20/{name}";
+        string mensaje = $"20/{name}\n";
         byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
         server.Send(bytes);
         titulo.text = "Jugadores con los que has jugado:";
@@ -65,7 +65,7 @@ public class Sc_Consultas : MonoBehaviour
         string jugadorAConsultar=textBox.GetComponent<TMP_InputField>().text.Replace("/","");
         if(jugadorAConsultar!="")
         {
-            string mensaje = $"21/{name}/{jugadorAConsultar}";
+            string mensaje = $"21/{name}/{jugadorAConsultar}\n";
             byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
             server.Send(bytes);
             titulo.text = "Resultados contra " + jugadorAConsultar + ":";
@@ -82,7 +82,7 @@ public class Sc_Consultas : MonoBehaviour
         string año2=aaaa2.GetComponent<TMP_InputField>().text;
         if(dia1!="" && dia2!="" && mes1!="" && mes2!="" && año1!="" && año2!="")
         {
-            string mensaje = $"22/{PantallaPrincipal.usuario}/{año1}-{mes1}-{dia1}/{año2}-{mes2}-{dia2}";
+            string mensaje = $"22/{PantallaPrincipal.usuario}/{año1}-{mes1}-{dia1}/{año2}-{mes2}-{dia2}\n";
             byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
             server.Send(bytes);
             titulo.text = "Lista de partidas jugadas en un tiempo:";

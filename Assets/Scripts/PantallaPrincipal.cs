@@ -211,7 +211,8 @@ public class PantallaPrincipal : MonoBehaviour
         {
             message += "/" + invitado.nombre;
         }
-
+        message += "\n";
+        Debug.Log(message);
         byte[] msg = Encoding.ASCII.GetBytes(message);
         server.Send(msg);
         host=true;
@@ -233,7 +234,7 @@ public class PantallaPrincipal : MonoBehaviour
     
     public void CerrarInvitacion(bool aceptada)
     {
-        string mensaje = "10/" + idPartida.ToString() + (aceptada ? "/1" : "/0");  
+        string mensaje = "10/" + idPartida.ToString() + (aceptada ? "/1" : "/0") + "\n";  
         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
 
@@ -261,12 +262,12 @@ public class PantallaPrincipal : MonoBehaviour
             uiElements.mainPanelConnectButton.interactable = false;
             uiElements.mainPanelConnectionIndicator.color = Color.green;
             uiElements.mainPanelMessageBox.text = "";
+            uiElements.mainPanelInvitarJugadores.interactable = (idPartida == -1);
             if (usuario != null)
             {
                 //sessi� ja iniciada:
                 uiElements.mainPanelUserInfo.gameObject.SetActive(true);
                 uiElements.mainPanelListaConectados.gameObject.SetActive(true);
-                uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
                 uiElements.mainPanelUsername.text = usuario;
                 uiElements.mainPanelDesconectarButton.interactable = true;
                 uiElements.mainPanelLoginButton.interactable = false;
@@ -277,12 +278,12 @@ public class PantallaPrincipal : MonoBehaviour
                 uiElements.mainPanelChat.SetActive(idPartida != -1);
                 uiElements.mainPanelPracticarButton.interactable = idPartida == -1;
 
-                string mensaje = "7/";
+                string mensaje = "7/\n";
                 byte[] msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
 
 
-                mensaje = "23/" + PantallaPrincipal.usuario;
+                mensaje = "23/" + PantallaPrincipal.usuario + "\n";
                 msg = Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
             }
@@ -318,7 +319,7 @@ public class PantallaPrincipal : MonoBehaviour
     {
         if (server != null && server.Connected)
         {
-            string mensaje = "0/";
+            string mensaje = "0/\n";
             byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
             threadServidor.Abort();
@@ -400,7 +401,7 @@ public class PantallaPrincipal : MonoBehaviour
             return;
         }
 
-        string mensaje = "0/";
+        string mensaje = "0/\n";
         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
         // Se termin� el servicio. 
@@ -467,10 +468,11 @@ public class PantallaPrincipal : MonoBehaviour
         uiElements.mainPanelIniciarPartida.SetActive(false);
         uiElements.mainPanelConnectionIndicator.color = Color.white;
         uiElements.mainPanelUserInfo.gameObject.SetActive(false);
+        uiElements.mainPanelInvitarJugadores.interactable = false;
     }
     public void EliminarUsuario_OnClick()
     {
-        string mensaje = "24/" + uiElements.mainPanelUsername.text;  
+        string mensaje = "24/" + uiElements.mainPanelUsername.text + "\n";  
         byte[] msg = Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
 

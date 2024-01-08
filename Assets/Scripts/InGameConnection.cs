@@ -61,7 +61,7 @@ public class InGameConnection : MonoBehaviour
             color=4;
         else if(ScenesManager.colorPrincipal.name==spriteBlanco.name)
             color=5;
-        string mensaje = $"14/{idPartida}/{name}/{x}/{y}/{rot}/{color}";
+        string mensaje = $"14/{idPartida}/{name}/{x}/{y}/{rot}/{color}\n";
         byte[] bytes = Encoding.ASCII.GetBytes(mensaje);
         server.Send(bytes);
     }

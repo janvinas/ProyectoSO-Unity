@@ -44,7 +44,7 @@ public class Login : MonoBehaviour
             return;
         }
 
-        string mensaje = "1/" + usuario.text.Replace("/","") + "/" + password.text.Replace("/","");
+        string mensaje = "1/" + usuario.text.Replace("/","") + "/" + password.text.Replace("/","") + "\n";
         // Enviamos al servidor el nombre tecleado
         byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);
@@ -70,7 +70,7 @@ public class Login : MonoBehaviour
 
                 //pide la experiencia del usuario
                 Debug.Log(PantallaPrincipal.usuario);
-                string mensaje = "23/" + PantallaPrincipal.usuario;
+                string mensaje = "23/" + PantallaPrincipal.usuario + "\n";
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
 

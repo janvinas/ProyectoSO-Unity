@@ -44,7 +44,7 @@ public class Chat : MonoBehaviour
 
         Debug.Log("3");
 
-        string message = "12/" + PantallaPrincipal.idPartida + "/" + PantallaPrincipal.usuario + "/" + text;
+        string message = "12/" + PantallaPrincipal.idPartida + "/" + PantallaPrincipal.usuario + "/" + text + "\n";
         Debug.Log("Mensaje enviado " + message);
         byte[] msg = Encoding.ASCII.GetBytes(message);
         PantallaPrincipal.server.Send(msg);

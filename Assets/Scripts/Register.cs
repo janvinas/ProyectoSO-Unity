@@ -92,7 +92,7 @@ public class Register : MonoBehaviour
         }
 
         Socket server = PantallaPrincipal.server;
-        string message = "2/" + usuario.text.Replace("/","") + "/" + password.text.Replace("/","") + "/" + email.text.Replace("/","") + "/" + genero.text.Replace("/","");
+        string message = "2/" + usuario.text.Replace("/","") + "/" + password.text.Replace("/","") + "/" + email.text.Replace("/","") + "/" + genero.text.Replace("/","") + "\n";
         Debug.Log("enviando respuesta" + message);
         // Enviamos al servidor el nombre tecleado
         byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);
@@ -114,7 +114,7 @@ public class Register : MonoBehaviour
             return;
         }
 
-        string mensaje = "3/" + inputField.text.Replace("/","");
+        string mensaje = "3/" + inputField.text.Replace("/","") + "\n";
         // Enviamos al servidor el nombre tecleado
         byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
         server.Send(msg);

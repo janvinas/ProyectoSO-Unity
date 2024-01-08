@@ -44,7 +44,7 @@ public class UIGame : MonoBehaviour
 
     private void SendStartingMessage(string mapa)
     {
-        string message = "15/" + PantallaPrincipal.idPartida + "/" + mapa;
+        string message = "15/" + PantallaPrincipal.idPartida + "/" + mapa + "\n";
         byte[] msg = Encoding.ASCII.GetBytes(message);
 
         if (PantallaPrincipal.server == null || !PantallaPrincipal.server.Connected) return;
