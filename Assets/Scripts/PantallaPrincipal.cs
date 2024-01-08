@@ -411,7 +411,7 @@ public class PantallaPrincipal : MonoBehaviour
         server.Shutdown(SocketShutdown.Both);
         server.Close();
         uiElements.mainPanelPracticarButton.interactable = true;
-        
+        activo=false;
 
 
     }
