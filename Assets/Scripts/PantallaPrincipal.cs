@@ -415,7 +415,7 @@ public class PantallaPrincipal : MonoBehaviour
         uiElements.mainPanelDesconectarButton.gameObject.SetActive(false);
         uiElements.mainPanelEliminarButton.gameObject.SetActive(false);
         uiElements.mainPanelConsultasButton.gameObject.SetActive(false);
-
+        idPartida = -1;
 
     }
 
