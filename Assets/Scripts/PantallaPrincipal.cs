@@ -412,6 +412,9 @@ public class PantallaPrincipal : MonoBehaviour
         server.Close();
         uiElements.mainPanelPracticarButton.interactable = true;
         activo=false;
+        uiElements.mainPanelDesconectarButton.gameObject.SetActive(false);
+        uiElements.mainPanelEliminarButton.gameObject.SetActive(false);
+        uiElements.mainPanelConsultasButton.gameObject.SetActive(false);
 
 
     }
