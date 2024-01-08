@@ -224,6 +224,7 @@ public class PantallaPrincipal : MonoBehaviour
 
     private void MostrarInvitacion(string message)
     {
+        if(idPartida!=-1) return;
         string[] trozos = message.Split("/");
         idPartida = Convert.ToInt32(trozos[0]);
 

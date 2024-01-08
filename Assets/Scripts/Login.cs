@@ -67,6 +67,7 @@ public class Login : MonoBehaviour
                 uiElements.mainPanelInvitarJugadores.gameObject.SetActive(true);
                 uiElements.mainPanelLoginButton.interactable = false;
                 uiElements.mainPanelRegisterButton.interactable = false;
+                uiElements.mainPanelInvitarJugadores.interactable = true;
 
                 //pide la experiencia del usuario
                 Debug.Log(PantallaPrincipal.usuario);
